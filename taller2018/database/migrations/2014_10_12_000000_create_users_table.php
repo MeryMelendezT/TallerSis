@@ -43,6 +43,13 @@ class CreateUsersTable extends Migration
             $table->string('jardin')->nullable();
             $table->string('terraza')->nullable();
             $table->string('balcon')->nullable();
+            $table->string('alojamiento')->nullable();
+            $table->integer('precio_alojamiento')->nullable();
+            $table->integer('precio_adicional_alojamiento')->nullable();
+            $table->string('direccion_recogida')->nullable();
+            $table->string('paseo')->nullable();
+            $table->integer('precio_paseo')->nullable();
+            $table->string('direccion_recogida_paseo')->nullable();
             $table->rememberToken();
             $table->integer('tx_usuario_id');
             $table->string('tx_host',25);

@@ -21,6 +21,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/homeCuidador', 'HomeController@indexCuidador')->name('homeCuidador');
 
+Route::get('/cuidador', 'UserController@listCuidador')->name('cuidador');
+
 Route::get('/crearUsuario',array(
     'as' => 'createUserPropietario',
     'uses' => 'UserController@createUserPropietario'

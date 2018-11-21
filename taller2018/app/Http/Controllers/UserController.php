@@ -14,6 +14,12 @@ use App\User;
 
 class UserController extends Controller
 {
+    public function listCuidador(){
+        $users = User::where('tipo_usuario','Cuidador')->orderBy('id','desc')->paginate('5');
+        return view('user.listCuidador', array(
+            'users' => $users
+        ));
+    }
 
     public function createUserPropietario(){
         return view('user.createUserPropietario');
@@ -37,6 +43,11 @@ class UserController extends Controller
             'descripcion' => 'required',
             'trabajo' => 'required',
             'tipo_casa' => 'required',
+            'jardin' => 'required',
+            'terraza' => 'required',
+            'balcon' => 'required',
+            'alojamiento' => 'required',
+            'paseo' => 'required',
 
         ]);
         $user = new User();
@@ -82,6 +93,13 @@ class UserController extends Controller
         $user->jardin = $request->input('jardin');
         $user->terraza = $request->input('terraza');
         $user->balcon = $request->input('balcon');
+        $user->alojamiento = $request->input('alojamiento');
+        $user->precio_alojamiento = $request->input('precio_alojamiento');
+        $user->precio_adicional_alojamiento = $request->input('precio_adicional_alojamiento');
+        $user->direccion_recogida = $request->input('direccion_recogida');
+        $user->paseo = $request->input('paseo');
+        $user->precio_paseo = $request->input('precio_paseo');
+        $user->direccion_recogida_paseo = $request->input('direccion_recogida_paseo');
 
         $user->tx_usuario_id = 1;
         $user->tx_host = $_SERVER['REMOTE_ADDR'];
@@ -209,6 +227,13 @@ class UserController extends Controller
         $user->jardin = $request->input('jardin');
         $user->terraza = $request->input('terraza');
         $user->balcon = $request->input('balcon');
+        $user->alojamiento = $request->input('alojamiento');
+        $user->precio_alojamiento = $request->input('precio_alojamiento');
+        $user->precio_adicional_alojamiento = $request->input('precio_adicional_alojamiento');
+        $user->direccion_recogida = $request->input('direccion_recogida');
+        $user->paseo = $request->input('paseo');
+        $user->precio_paseo = $request->input('precio_paseo');
+        $user->direccion_recogida_paseo = $request->input('direccion_recogida_paseo');
 
         $user->tx_usuario_id = 1;
         $user->tx_host = $_SERVER['REMOTE_ADDR'];

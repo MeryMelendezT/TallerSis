@@ -16,6 +16,7 @@
     <link href="../assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
     <!-- Argon CSS -->
     <link type="text/css" href="../assets/css/argon.css?v=1.0.0" rel="stylesheet">
+
 </head>
 
 <body>
@@ -230,7 +231,10 @@
                         <div class="card-body">
                             <hr class="my-4" />
                             <div class="row">
-
+                                <form>
+                                    @csrf
+                                    <h4 class="text-muted mb-4">Servicios</h4>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -534,7 +538,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <hr/>
+                            <hr class="my-4" />
                             <div class="row" align="center">
                                 <div class="col-lg-12">
                                     <div class="col-md-12">
@@ -645,6 +649,147 @@
                                     </div>
                                 </div>
                             </div>
+                            <hr class="my-4" />
+                            <h4 class="text-muted mb-4">Servicios</h4>
+                            <div class="pl-lg-4">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-12">
+                                            <small class="text-uppercase font-weight-bold">{{ __('Alojamiento') }}</small>
+                                        </div>
+                                        @if(Auth::user()->alojamiento == 'Si')
+                                        <div class="col-lg-12">
+                                            <div class="custom-control custom-control-inline custom-radio mb-3">
+                                                <input name="alojamiento" class="custom-control-input" id="alojamiento" checked type="radio" value="Si" disabled>
+                                                <label class="custom-control-label" for="alojamiento">
+                                                    <span>Si</span>
+                                                </label>
+                                            </div>
+                                            <div class="custom-control custom-control-inline custom-radio mb-3">
+                                                <input name="alojamiento" class="custom-control-input" id="alojamiento_no" type="radio" value="No" disabled>
+                                                <label class="custom-control-label" for="alojamiento_no">
+                                                    <span>No</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        @elseif(Auth::user()->alojamiento == 'No')
+                                        <div class="col-lg-12">
+                                            <div class="custom-control custom-control-inline custom-radio mb-3">
+                                                <input name="alojamiento" class="custom-control-input" id="alojamiento" type="radio" value="Si" disabled>
+                                                <label class="custom-control-label" for="alojamiento">
+                                                    <span>Si</span>
+                                                </label>
+                                            </div>
+                                            <div class="custom-control custom-control-inline custom-radio mb-3">
+                                                <input name="alojamiento" class="custom-control-input" id="alojamiento_no" checked type="radio" value="No" disabled>
+                                                <label class="custom-control-label" for="alojamiento_no">
+                                                    <span>No</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        @endif
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="name">{{ __('Precio Por Dia') }}</label>
+                                            <input type="number" id="precio_alojamiento" class="form-control{{ $errors->has('precio_alojamiento') ? ' is-invalid' : '' }}" name="precio_alojamiento" value="{{ Auth::user()->precio_alojamiento }}" placeholder="Precio Por Dia" pattern="[0-9 ]+" required autofocus disabled>
+                                            @if ($errors->has('precio_alojamiento'))
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $errors->first('precio_alojamiento') }}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="name">{{ __('Precio Adicional de Entrega o Recogida') }}</label>
+                                            <input type="number" id="precio_adicional_alojamiento" class="form-control{{ $errors->has('precio_adicional_alojamiento') ? ' is-invalid' : '' }}" name="precio_adicional_alojamiento" value="{{ Auth::user()->precio_adicional_alojamiento }}" placeholder="Precio Por Dia" pattern="[0-9 ]+" required autofocus disabled>
+                                            @if ($errors->has('precio_adicional_alojamiento'))
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $errors->first('precio_adicional_alojamiento') }}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="direccion_recogida">{{ __('Direccion de Recogida') }}</label>
+                                            <input type="text" id="direccion_recogida" class="form-control{{ $errors->has('direccion_recogida') ? ' is-invalid' : '' }}" name="direccion_recogida" value="{{ Auth::user()->direccion_recogida }}" placeholder="Direccion de Entrega" required disabled>
+                                            @if ($errors->has('direccion_recogida'))
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $errors->first('direccion_recogida') }}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="my-4" />
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-12">
+                                            <small class="text-uppercase font-weight-bold">{{ __('Paseo') }}</small>
+                                        </div>
+                                        @if(Auth::user()->paseo == 'Si')
+                                        <div class="col-lg-12">
+                                            <div class="custom-control custom-control-inline custom-radio mb-3">
+                                                <input name="paseo" class="custom-control-input" id="paseo" checked type="radio" value="Si" disabled>
+                                                <label class="custom-control-label" for="paseo">
+                                                    <span>Si</span>
+                                                </label>
+                                            </div>
+                                            <div class="custom-control custom-control-inline custom-radio mb-3">
+                                                <input name="paseo" class="custom-control-input" id="paseo_no" type="radio" value="No" disabled>
+                                                <label class="custom-control-label" for="paseo_no">
+                                                    <span>No</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        @elseif(Auth::user()->paseo == 'No')
+                                            <div class="col-lg-12">
+                                                <div class="custom-control custom-control-inline custom-radio mb-3">
+                                                    <input name="paseo" class="custom-control-input" id="paseo" type="radio" value="Si" disabled>
+                                                    <label class="custom-control-label" for="paseo">
+                                                        <span>Si</span>
+                                                    </label>
+                                                </div>
+                                                <div class="custom-control custom-control-inline custom-radio mb-3">
+                                                    <input name="paseo" class="custom-control-input" id="paseo_no" checked type="radio" value="No" disabled>
+                                                    <label class="custom-control-label" for="paseo_no">
+                                                        <span>No</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="name">{{ __('Precio Por Dia') }}</label>
+                                            <input type="number" id="precio_paseo" class="form-control{{ $errors->has('precio_paseo') ? ' is-invalid' : '' }}" name="precio_paseo" value="{{ Auth::user()->precio_paseo }}" placeholder="Precio Por Hora" pattern="[0-9 ]+" required autofocus disabled>
+                                            @if ($errors->has('precio_paseo'))
+                                                <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $errors->first('precio_paseo') }}</strong>
+                                                        </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="direccion_recogida">{{ __('Direccion de Recogida') }}</label>
+                                            <input type="text" id="direccion_recogida" class="form-control{{ $errors->has('direccion_recogida') ? ' is-invalid' : '' }}" name="direccion_recogida" value="{{ Auth::user()->direccion_recogida }}" placeholder="Direccion de Entrega" required disabled>
+                                            @if ($errors->has('direccion_recogida'))
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $errors->first('direccion_recogida') }}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="my-4" />
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -666,6 +811,19 @@
 <!-- Core -->
 <script src="../assets/vendor/jquery/dist/jquery.min.js"></script>
 <script src="../assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="./assets2/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+
+<script type="text/javascript">
+
+    $('.date').datepicker({
+        format: 'yyyy-mm-dd',
+        language: 'es',
+        autoclose: true
+
+    });
+
+</script>
+
 <!-- Argon JS -->
 <script src="../assets/js/argon.js?v=1.0.0"></script>
 </body>

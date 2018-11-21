@@ -578,9 +578,115 @@
                                                 </div>
                                             </div>
                                             <hr class="my-4" />
+                                            <h4 class="text-muted mb-4">Servicios</h4>
+                                            <div class="pl-lg-4">
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="col-lg-12">
+                                                            <small class="text-uppercase font-weight-bold">{{ __('Alojamiento') }}</small>
+                                                        </div>
+                                                        <div class="col-lg-12">
+                                                            <div class="custom-control custom-control-inline custom-radio mb-3">
+                                                                <input name="alojamiento" class="custom-control-input" id="alojamiento" checked type="radio" value="Si">
+                                                                <label class="custom-control-label" for="alojamiento">
+                                                                    <span>Si</span>
+                                                                </label>
+                                                            </div>
+                                                            <div class="custom-control custom-control-inline custom-radio mb-3">
+                                                                <input name="alojamiento" class="custom-control-input" id="alojamiento_no" type="radio" value="No">
+                                                                <label class="custom-control-label" for="alojamiento_no">
+                                                                    <span>No</span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label class="form-control-label" for="name">{{ __('Precio Por Dia') }}</label>
+                                                            <input type="number" id="precio_alojamiento" class="form-control{{ $errors->has('precio_alojamiento') ? ' is-invalid' : '' }}" name="precio_alojamiento" value="{{ old('precio_alojamiento') }}" placeholder="Precio Por Dia" pattern="[0-9 ]+">
+                                                            @if ($errors->has('precio_alojamiento'))
+                                                                <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $errors->first('precio_alojamiento') }}</strong>
+                                                        </span>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label class="form-control-label" for="name">{{ __('Precio Adicional de Entrega o Recogida') }}</label>
+                                                            <input type="number" id="precio_adicional_alojamiento" class="form-control{{ $errors->has('precio_adicional_alojamiento') ? ' is-invalid' : '' }}" name="precio_adicional_alojamiento" value="{{ old('precio_adicional_alojamiento') }}" placeholder="Precio Por Dia" pattern="[0-9 ]+">
+                                                            @if ($errors->has('precio_adicional_alojamiento'))
+                                                                <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $errors->first('precio_adicional_alojamiento') }}</strong>
+                                                        </span>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="form-group">
+                                                            <label class="form-control-label" for="direccion_recogida">{{ __('Direccion de Recogida') }}</label>
+                                                            <input type="text" id="direccion_recogida" class="form-control{{ $errors->has('direccion_recogida') ? ' is-invalid' : '' }}" name="direccion_recogida" value="{{ old('direccion_recogida') }}" placeholder="Direccion de Entrega">
+                                                            @if ($errors->has('direccion_recogida'))
+                                                                <span class="invalid-feedback" role="alert">
+                                                                    <strong>{{ $errors->first('direccion_recogida') }}</strong>
+                                                                </span>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <hr class="my-4" />
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="col-lg-12">
+                                                            <small class="text-uppercase font-weight-bold">{{ __('Paseo') }}</small>
+                                                        </div>
+                                                        <div class="col-lg-12">
+                                                            <div class="custom-control custom-control-inline custom-radio mb-3">
+                                                                <input name="paseo" class="custom-control-input" id="paseo" checked type="radio" value="Si">
+                                                                <label class="custom-control-label" for="paseo">
+                                                                    <span>Si</span>
+                                                                </label>
+                                                            </div>
+                                                            <div class="custom-control custom-control-inline custom-radio mb-3">
+                                                                <input name="paseo" class="custom-control-input" id="paseo_no" type="radio" value="No">
+                                                                <label class="custom-control-label" for="paseo_no">
+                                                                    <span>No</span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label class="form-control-label" for="name">{{ __('Precio Por Dia') }}</label>
+                                                            <input type="number" id="precio_paseo" class="form-control{{ $errors->has('precio_paseo') ? ' is-invalid' : '' }}" name="precio_paseo" value="{{ old('precio_paseo') }}" placeholder="Precio Por Hora" pattern="[0-9 ]+">
+                                                            @if ($errors->has('precio_paseo'))
+                                                                <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $errors->first('precio_paseo') }}</strong>
+                                                        </span>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="form-group">
+                                                            <label class="form-control-label" for="direccion_recogida_paseo">{{ __('Direccion de Recogida') }}</label>
+                                                            <input type="text" id="direccion_recogida_paseo" class="form-control{{ $errors->has('direccion_recogida_paseo') ? ' is-invalid' : '' }}" name="direccion_recogida_paseo" value="{{ old('direccion_recogida_paseo') }}" placeholder="Direccion de Entrega">
+                                                            @if ($errors->has('direccion_recogida_paseo'))
+                                                                <span class="invalid-feedback" role="alert">
+                                                                    <strong>{{ $errors->first('direccion_recogida_paseo') }}</strong>
+                                                                </span>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <hr class="my-4" />
+                                            </div>
                                             <div class="form-group row mb-0">
                                                 <div class="col-md-12 offset-md-5">
-                                                    <button type="submit" class="btn btn-primary" onclick="capturar()">
+                                                    <button type="submit" class="btn btn-primary">
                                                         {{ __('Registrarse') }}
                                                     </button>
                                                 </div>
@@ -626,17 +732,6 @@
 
     });
 
-</script>
-
-<script>
-    function capturar() {
-        var jardin=document.getElementsByName("jardin")[0].checked;
-        var terraza=document.getElementsByName("terraza")[0].checked;
-        var balcon=document.getElementsByName("balcon")[0].checked;
-
-        document.getElementsByName("resultado").innerHTML=" \
-            Jardin" + jardin + "terraza" + terraza + "blacon" + balcon;
-    }
 </script>
 
 <!-- Argon JS -->
