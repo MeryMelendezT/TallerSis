@@ -41,8 +41,8 @@ class LoginController extends Controller
     {
         if (auth()->user()->tipo_usuario == 'Propietario') {
             return '/home';
+        }elseif (auth()->user()->tipo_usuario == 'Cuidador'){
+            return '/homeCuidador';
         }
-
-        return '/homeCuidador';
     }
 }

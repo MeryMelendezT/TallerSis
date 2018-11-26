@@ -112,7 +112,7 @@
                             <div class="tab-content" id="myTabContent">
                                 <div class="tab-pane fade show active" role="tabpanel" id="tabs-icons-text-1" aria-labelledby="tabs-icons-text-1-tab">
                                     <div class="card-body">
-                                        <form method="POST" action="{{ route('savePropietario') }}">
+                                        <form method="POST" action="{{ route('savePropietario') }}" enctype="multipart/form-data">
                                             @csrf
                                             <h4 class="text-muted mb-4">Perfil Propietario</h4>
                                             <h6 class="heading-small text-muted mb-4">Informacion de usuario</h6>
@@ -252,6 +252,14 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="form-group">
+                                                            <label class="form-control-label" for="image">Subir foto del propietario</label>
+                                                            <input type="file" id="image" class="form-control" name="image" accept="image/*" required/>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="form-group row mb-0">
                                                 <div class="col-md-12 offset-md-5">
@@ -265,7 +273,7 @@
                                 </div>
                                 <div class="tab-pane fade" role="tabpanel" id="tabs-icons-text-2" aria-labelledby="tabs-icons-text-2-tab">
                                     <div class="card-body">
-                                        <form method="POST" action="{{ route('saveCuidador') }}">
+                                        <form method="POST" action="{{ route('saveCuidador') }}" enctype="multipart/form-data">
                                             @csrf
                                             <h4 class="text-muted mb-4">Perfil Propietario</h4>
                                             <h6 class="heading-small text-muted mb-4">Informacion de usuario</h6>
@@ -405,8 +413,8 @@
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label class="form-control-label" for="foto">Subir foto personal</label>
-                                                            <input type="file" id="foto" class="form-control" name="foto" accept="image/*"/>
+                                                            <label class="form-control-label" for="image">Subir foto personal</label>
+                                                            <input type="file" id="image" class="form-control" name="image" accept="image/*"/>
                                                         </div>
                                                     </div>
                                                     </div>

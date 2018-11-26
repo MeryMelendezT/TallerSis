@@ -37,4 +37,10 @@ class HomeController extends Controller
         return view('homeCuidador');
     }
 
+    public function index1()
+    {
+        return view('home1');
+    }
+
+
 }

@@ -161,6 +161,8 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\FormatTimeServiceProvider::class,
 
+        MaddHatter\LaravelFullcalendar\ServiceProvider::class,
+
     ],
 
     /*
@@ -210,6 +212,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'FormatTime' => App\Helpers\FormatTime::class,
+        'Calendar' => \MaddHatter\LaravelFullcalendar\Facades\Calendar::class,
 
     ],
 

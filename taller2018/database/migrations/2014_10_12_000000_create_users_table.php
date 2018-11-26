@@ -32,14 +32,14 @@ class CreateUsersTable extends Migration
             $table->integer('numero_canes')->nullable();
             $table->integer('telefono');
             $table->string('habilitado')->nullable();
-            $table->string('foto')->nullable();
+            $table->string('image')->nullable();
             $table->text('trabajo')->nullable();
             $table->text('descripcion')->nullable();
             $table->date('nacimiento')->nullable();
             $table->string('tipo_casa',25)->nullable();
             $table->string('ci',25)->nullable();
-            $table->string('foto_ci_anverso',50)->nullable();
-            $table->string('foto_ci_reverso',50)->nullable();
+            $table->string('foto_ci_anverso')->nullable();
+            $table->string('foto_ci_reverso')->nullable();
             $table->string('jardin')->nullable();
             $table->string('terraza')->nullable();
             $table->string('balcon')->nullable();

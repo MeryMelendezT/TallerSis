@@ -28,7 +28,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <!-- Brand -->
-        <a class="navbar-brand pt-0" href="../home">
+        <a class="navbar-brand pt-0" href="../homeCuidador">
             <img src="../assets/img/brand/blue.png" class="navbar-brand-img" alt="...">
         </a>
         <!-- User -->
@@ -88,7 +88,7 @@
             <div class="navbar-collapse-header d-md-none">
                 <div class="row">
                     <div class="col-6 collapse-brand">
-                        <a href="../home">
+                        <a href="../homeCuidador">
                             <img src="../assets/img/brand/blue.png">
                         </a>
                     </div>
@@ -114,12 +114,12 @@
             <!-- Navigation -->
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="../home">
+                    <a class="nav-link" href="../cuidador">
                         <i class="ni ni-pin-3 text-purple"></i> Cuidador
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="../home">
+                    <a class="nav-link active" href="../homeCuidador">
                         <i class="ni ni-single-02 text-blue"></i> Perfil
                     </a>
                 </li>
@@ -162,7 +162,7 @@
                     <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <div class="media align-items-center">
                 <span class="avatar avatar-sm rounded-circle">
-                  <img alt="Image placeholder" src="../assets/img/theme/team-4-800x800.jpg">
+                  <img alt="Image placeholder" src="{{ url('/imagePerfil/'.Auth::user()->image) }}">
                 </span>
                             <div class="media-body ml-2 d-none d-lg-block">
                                 <span class="mb-0 text-sm  font-weight-bold">{{ Auth::user()->name }}</span>
@@ -210,8 +210,7 @@
             <div class="row">
                 <div class="col-lg-7 col-md-10">
                     <h1 class="display-2 text-white">Hola {{ Auth::user()->name }} {{ Auth::user()->apellido }} </h1>
-                    <p class="text-white mt-0 mb-5"></p>
-                    <a href="./crearCanino" class="btn btn-info">Mascotas</a>
+                    <p class="text-white mt-0 mb-5"></p>>
                 </div>
             </div>
         </div>
@@ -219,34 +218,13 @@
     <!-- Page content -->
     <div class="container-fluid mt--7">
         <div class="row">
-            <div class="col-xl-6 order-xl-2 mb-5 mb-xl-0">
-                <div class="card card-profile shadow">
-                    <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
-                        <div class="d-flex justify-content-between">
-                            <h3 class="mb-0">SERVICIOS</h3>
-                            <a href="crearCanino" class="btn btn-sm btn-default float-right">Agregar</a>
-                        </div>
-                    </div>
-                    <div class="card-body pt-0 pt-md-4">
-                        <div class="card-body">
-                            <hr class="my-4" />
-                            <div class="row">
-                                <form>
-                                    @csrf
-                                    <h4 class="text-muted mb-4">Servicios</h4>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div class="col-xl-6 order-xl-1">
                 <div class="card bg-secondary shadow">
                     <div class="row justify-content-center">
                         <div class="col-lg-3 order-lg-2">
                             <div class="card-profile-image">
                                 <a href="#">
-                                    <img src="../assets/img/theme/team-4-800x800.jpg" class="rounded-circle">
+                                    <img src="{{ url('/imagePerfil/'.Auth::user()->image) }}" class="rounded-circle">
                                 </a>
                             </div>
                         </div>
@@ -440,18 +418,18 @@
                                                 <small class="text-uppercase font-weight-bold">{{ __('Jardin') }}</small>
                                             </div>
                                             @if(Auth::user()->jardin == 'Si')
-                                            <div class="custom-control custom-control-inline custom-radio mb-3">
-                                                <input name="jardin" class="custom-control-input" id="jardines" checked type="radio" value="Si" disabled>
-                                                <label class="custom-control-label" for="jardines">
-                                                    <span>Si</span>
-                                                </label>
-                                            </div>
-                                            <div class="custom-control custom-control-inline custom-radio mb-3">
-                                                <input name="jardin" class="custom-control-input" id="jardin_no" type="radio" value="No" disabled>
-                                                <label class="custom-control-label" for="jardin_no">
-                                                    <span>No</span>
-                                                </label>
-                                            </div>
+                                                <div class="custom-control custom-control-inline custom-radio mb-3">
+                                                    <input name="jardin" class="custom-control-input" id="jardines" checked type="radio" value="Si" disabled>
+                                                    <label class="custom-control-label" for="jardines">
+                                                        <span>Si</span>
+                                                    </label>
+                                                </div>
+                                                <div class="custom-control custom-control-inline custom-radio mb-3">
+                                                    <input name="jardin" class="custom-control-input" id="jardin_no" type="radio" value="No" disabled>
+                                                    <label class="custom-control-label" for="jardin_no">
+                                                        <span>No</span>
+                                                    </label>
+                                                </div>
                                             @elseif(Auth::user()->jardin == 'No')
                                                 <div class="custom-control custom-control-inline custom-radio mb-3">
                                                     <input name="jardin" class="custom-control-input" id="jardines" type="radio" value="Si" disabled>
@@ -474,18 +452,18 @@
                                                 <small class="text-uppercase font-weight-bold">{{ __('Terraza') }}</small>
                                             </div>
                                             @if(Auth::user()->terraza == 'Si')
-                                            <div class="custom-control custom-control-inline custom-radio mb-3">
-                                                <input name="terraza" class="custom-control-input" id="terraza" checked type="radio" value="Si" disabled>
-                                                <label class="custom-control-label" for="terraza">
-                                                    <span>Si</span>
-                                                </label>
-                                            </div>
-                                            <div class="custom-control custom-control-inline custom-radio mb-3">
-                                                <input name="terraza" class="custom-control-input" id="terraza_no" type="radio" value="No" disabled>
-                                                <label class="custom-control-label" for="terraza_no">
-                                                    <span>No</span>
-                                                </label>
-                                            </div>
+                                                <div class="custom-control custom-control-inline custom-radio mb-3">
+                                                    <input name="terraza" class="custom-control-input" id="terraza" checked type="radio" value="Si" disabled>
+                                                    <label class="custom-control-label" for="terraza">
+                                                        <span>Si</span>
+                                                    </label>
+                                                </div>
+                                                <div class="custom-control custom-control-inline custom-radio mb-3">
+                                                    <input name="terraza" class="custom-control-input" id="terraza_no" type="radio" value="No" disabled>
+                                                    <label class="custom-control-label" for="terraza_no">
+                                                        <span>No</span>
+                                                    </label>
+                                                </div>
                                             @elseif(Auth::user()->terraza == 'No')
                                                 <div class="custom-control custom-control-inline custom-radio mb-3">
                                                     <input name="terraza" class="custom-control-input" id="terraza" type="radio" value="Si" disabled>
@@ -508,18 +486,18 @@
                                                 <small class="text-uppercase font-weight-bold">{{ __('Balcon') }}</small>
                                             </div>
                                             @if(Auth::user()->balcon == 'Si')
-                                            <div class="custom-control custom-control-inline custom-radio mb-3">
-                                                <input name="balcon" class="custom-control-input" id="balcon" checked type="radio" value="Si" disabled>
-                                                <label class="custom-control-label" for="balcon">
-                                                    <span>Si</span>
-                                                </label>
-                                            </div>
-                                            <div class="custom-control custom-control-inline custom-radio mb-3">
-                                                <input name="balcon" class="custom-control-input" id="balcon_no" type="radio" value="No" disabled>
-                                                <label class="custom-control-label" for="balcon_no">
-                                                    <span>No</span>
-                                                </label>
-                                            </div>
+                                                <div class="custom-control custom-control-inline custom-radio mb-3">
+                                                    <input name="balcon" class="custom-control-input" id="balcon" checked type="radio" value="Si" disabled>
+                                                    <label class="custom-control-label" for="balcon">
+                                                        <span>Si</span>
+                                                    </label>
+                                                </div>
+                                                <div class="custom-control custom-control-inline custom-radio mb-3">
+                                                    <input name="balcon" class="custom-control-input" id="balcon_no" type="radio" value="No" disabled>
+                                                    <label class="custom-control-label" for="balcon_no">
+                                                        <span>No</span>
+                                                    </label>
+                                                </div>
                                             @elseif(Auth::user()->balcon == 'No')
                                                 <div class="custom-control custom-control-inline custom-radio mb-3">
                                                     <input name="balcon" class="custom-control-input" id="balcon" type="radio" value="Si" disabled>
@@ -546,30 +524,30 @@
                                             <small class="text-uppercase font-weight-bold">{{ __('Tipo de Casa') }}</small>
                                         </div>
                                         @if(Auth::user()->tipo_casa == 'Casa Patio')
-                                        <div class="custom-control custom-control-inline custom-radio mb-3">
-                                            <input name="tipo_casa" class="custom-control-input" id="Patio" checked type="radio" value="Casa Patio" disabled>
-                                            <label class="custom-control-label" for="Patio">
-                                                <span>Casa Patio</span>
-                                            </label>
-                                        </div>
-                                        <div class="custom-control custom-control-inline custom-radio mb-3">
-                                            <input name="tipo_casa" class="custom-control-input" id="Apartamento" type="radio" value="Apartamento" disabled>
-                                            <label class="custom-control-label" for="Apartamento">
-                                                <span>Apartamento</span>
-                                            </label>
-                                        </div>
-                                        <div class="custom-control custom-control-inline custom-radio mb-3">
-                                            <input name="tipo_casa" class="custom-control-input" id="Duplex" type="radio" value="Duplex" disabled>
-                                            <label class="custom-control-label" for="Duplex">
-                                                <span>Duplex</span>
-                                            </label>
-                                        </div>
-                                        <div class="custom-control custom-control-inline custom-radio mb-3">
-                                            <input name="tipo_casa" class="custom-control-input" id="Chalet" type="radio" value="Chalet" disabled>
-                                            <label class="custom-control-label" for="Chalet">
-                                                <span>Chalet</span>
-                                            </label>
-                                        </div>
+                                            <div class="custom-control custom-control-inline custom-radio mb-3">
+                                                <input name="tipo_casa" class="custom-control-input" id="Patio" checked type="radio" value="Casa Patio" disabled>
+                                                <label class="custom-control-label" for="Patio">
+                                                    <span>Casa Patio</span>
+                                                </label>
+                                            </div>
+                                            <div class="custom-control custom-control-inline custom-radio mb-3">
+                                                <input name="tipo_casa" class="custom-control-input" id="Apartamento" type="radio" value="Apartamento" disabled>
+                                                <label class="custom-control-label" for="Apartamento">
+                                                    <span>Apartamento</span>
+                                                </label>
+                                            </div>
+                                            <div class="custom-control custom-control-inline custom-radio mb-3">
+                                                <input name="tipo_casa" class="custom-control-input" id="Duplex" type="radio" value="Duplex" disabled>
+                                                <label class="custom-control-label" for="Duplex">
+                                                    <span>Duplex</span>
+                                                </label>
+                                            </div>
+                                            <div class="custom-control custom-control-inline custom-radio mb-3">
+                                                <input name="tipo_casa" class="custom-control-input" id="Chalet" type="radio" value="Chalet" disabled>
+                                                <label class="custom-control-label" for="Chalet">
+                                                    <span>Chalet</span>
+                                                </label>
+                                            </div>
                                         @elseif(Auth::user()->tipo_casa == 'Apartamento')
                                             <div class="custom-control custom-control-inline custom-radio mb-3">
                                                 <input name="tipo_casa" class="custom-control-input" id="Patio" type="radio" value="Casa Patio" disabled>
@@ -658,35 +636,35 @@
                                             <small class="text-uppercase font-weight-bold">{{ __('Alojamiento') }}</small>
                                         </div>
                                         @if(Auth::user()->alojamiento == 'Si')
-                                        <div class="col-lg-12">
-                                            <div class="custom-control custom-control-inline custom-radio mb-3">
-                                                <input name="alojamiento" class="custom-control-input" id="alojamiento" checked type="radio" value="Si" disabled>
-                                                <label class="custom-control-label" for="alojamiento">
-                                                    <span>Si</span>
-                                                </label>
+                                            <div class="col-lg-12">
+                                                <div class="custom-control custom-control-inline custom-radio mb-3">
+                                                    <input name="alojamiento" class="custom-control-input" id="alojamiento" checked type="radio" value="Si" disabled>
+                                                    <label class="custom-control-label" for="alojamiento">
+                                                        <span>Si</span>
+                                                    </label>
+                                                </div>
+                                                <div class="custom-control custom-control-inline custom-radio mb-3">
+                                                    <input name="alojamiento" class="custom-control-input" id="alojamiento_no" type="radio" value="No" disabled>
+                                                    <label class="custom-control-label" for="alojamiento_no">
+                                                        <span>No</span>
+                                                    </label>
+                                                </div>
                                             </div>
-                                            <div class="custom-control custom-control-inline custom-radio mb-3">
-                                                <input name="alojamiento" class="custom-control-input" id="alojamiento_no" type="radio" value="No" disabled>
-                                                <label class="custom-control-label" for="alojamiento_no">
-                                                    <span>No</span>
-                                                </label>
-                                            </div>
-                                        </div>
                                         @elseif(Auth::user()->alojamiento == 'No')
-                                        <div class="col-lg-12">
-                                            <div class="custom-control custom-control-inline custom-radio mb-3">
-                                                <input name="alojamiento" class="custom-control-input" id="alojamiento" type="radio" value="Si" disabled>
-                                                <label class="custom-control-label" for="alojamiento">
-                                                    <span>Si</span>
-                                                </label>
+                                            <div class="col-lg-12">
+                                                <div class="custom-control custom-control-inline custom-radio mb-3">
+                                                    <input name="alojamiento" class="custom-control-input" id="alojamiento" type="radio" value="Si" disabled>
+                                                    <label class="custom-control-label" for="alojamiento">
+                                                        <span>Si</span>
+                                                    </label>
+                                                </div>
+                                                <div class="custom-control custom-control-inline custom-radio mb-3">
+                                                    <input name="alojamiento" class="custom-control-input" id="alojamiento_no" checked type="radio" value="No" disabled>
+                                                    <label class="custom-control-label" for="alojamiento_no">
+                                                        <span>No</span>
+                                                    </label>
+                                                </div>
                                             </div>
-                                            <div class="custom-control custom-control-inline custom-radio mb-3">
-                                                <input name="alojamiento" class="custom-control-input" id="alojamiento_no" checked type="radio" value="No" disabled>
-                                                <label class="custom-control-label" for="alojamiento_no">
-                                                    <span>No</span>
-                                                </label>
-                                            </div>
-                                        </div>
                                         @endif
                                     </div>
                                     <div class="col-lg-6">
@@ -732,20 +710,20 @@
                                             <small class="text-uppercase font-weight-bold">{{ __('Paseo') }}</small>
                                         </div>
                                         @if(Auth::user()->paseo == 'Si')
-                                        <div class="col-lg-12">
-                                            <div class="custom-control custom-control-inline custom-radio mb-3">
-                                                <input name="paseo" class="custom-control-input" id="paseo" checked type="radio" value="Si" disabled>
-                                                <label class="custom-control-label" for="paseo">
-                                                    <span>Si</span>
-                                                </label>
+                                            <div class="col-lg-12">
+                                                <div class="custom-control custom-control-inline custom-radio mb-3">
+                                                    <input name="paseo" class="custom-control-input" id="paseo" checked type="radio" value="Si" disabled>
+                                                    <label class="custom-control-label" for="paseo">
+                                                        <span>Si</span>
+                                                    </label>
+                                                </div>
+                                                <div class="custom-control custom-control-inline custom-radio mb-3">
+                                                    <input name="paseo" class="custom-control-input" id="paseo_no" type="radio" value="No" disabled>
+                                                    <label class="custom-control-label" for="paseo_no">
+                                                        <span>No</span>
+                                                    </label>
+                                                </div>
                                             </div>
-                                            <div class="custom-control custom-control-inline custom-radio mb-3">
-                                                <input name="paseo" class="custom-control-input" id="paseo_no" type="radio" value="No" disabled>
-                                                <label class="custom-control-label" for="paseo_no">
-                                                    <span>No</span>
-                                                </label>
-                                            </div>
-                                        </div>
                                         @elseif(Auth::user()->paseo == 'No')
                                             <div class="col-lg-12">
                                                 <div class="custom-control custom-control-inline custom-radio mb-3">
@@ -778,11 +756,11 @@
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div class="form-group">
-                                            <label class="form-control-label" for="direccion_recogida">{{ __('Direccion de Recogida') }}</label>
-                                            <input type="text" id="direccion_recogida" class="form-control{{ $errors->has('direccion_recogida') ? ' is-invalid' : '' }}" name="direccion_recogida" value="{{ Auth::user()->direccion_recogida }}" placeholder="Direccion de Entrega" required disabled>
-                                            @if ($errors->has('direccion_recogida'))
+                                            <label class="form-control-label" for="direccion_recogida_paseo">{{ __('Direccion de Recogida') }}</label>
+                                            <input type="text" id="direccion_recogida_paseo" class="form-control{{ $errors->has('direccion_recogida_paseo') ? ' is-invalid' : '' }}" name="direccion_recogida_paseo" value="{{ Auth::user()->direccion_recogida_paseo }}" placeholder="Direccion de Entrega" required disabled>
+                                            @if ($errors->has('direccion_recogida_paseo'))
                                                 <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $errors->first('direccion_recogida') }}</strong>
+                                                    <strong>{{ $errors->first('direccion_recogida_paseo') }}</strong>
                                                 </span>
                                             @endif
                                         </div>
@@ -791,6 +769,27 @@
                                 <hr class="my-4" />
                             </div>
                         </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6 order-xl-2 mb-5 mb-xl-0">
+                <div class="card card-profile shadow">
+                    <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
+                        <div class="d-flex justify-content-between">
+                            <h3 class="mb-0">SERVICIOS</h3>
+                            <a href="crearCanino" class="btn btn-sm btn-default float-right">Agregar</a>
+                        </div>
+                    </div>
+                    <div class="card-body pt-0 pt-md-4">
+                        <div class="card-body">
+                            <hr class="my-4" />
+                            <div class="row">
+                                <form>
+                                    @csrf
+                                    <h4 class="text-muted mb-4">Servicios</h4>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -161,7 +161,7 @@
                     <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <div class="media align-items-center">
                 <span class="avatar avatar-sm rounded-circle">
-                  <img alt="Image placeholder" src="../assets/img/theme/team-4-800x800.jpg">
+                  <img alt="Image placeholder" src="{{ url('/imagePerfil/'.Auth::user()->image) }}">
                 </span>
                             <div class="media-body ml-2 d-none d-lg-block">
                                 <span class="mb-0 text-sm  font-weight-bold">{{ Auth::user()->name }}</span>
@@ -210,7 +210,6 @@
                 <div class="col-lg-7 col-md-10">
                     <h1 class="display-2 text-white">Hola {{ Auth::user()->name }} {{ Auth::user()->apellido }} </h1>
                     <p class="text-white mt-0 mb-5"></p>
-                    <a href="./crearCanino" class="btn btn-info">Mascotas</a>
                 </div>
             </div>
         </div>
@@ -218,114 +217,13 @@
     <!-- Page content -->
     <div class="container-fluid mt--7">
         <div class="row">
-            <div class="col-xl-6 order-xl-2 mb-5 mb-xl-0">
-                <div class="card card-profile shadow">
-                    <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
-                        <div class="d-flex justify-content-between">
-                            <h3 class="mb-0">MASCOTAS</h3>
-                            <a href="crearCanino" class="btn btn-sm btn-default float-right">Agregar</a>
-                        </div>
-                    </div>
-                    <div class="card-body pt-0 pt-md-4">
-                        <div class="card-body">
-                            <hr class="my-4" />
-                            <div class="row">
-                                <div class="col">
-                                    <div class="card-header border-0">
-                                        <h3 class="mb-0">Listado Mascotas</h3>
-                                    </div>
-                                    <div class="table-responsive">
-                                        <table class="table align-items-center table-flush">
-                                            <thead class="thead-light">
-                                            <tr>
-                                                <th scope="col">Nombre</th>
-                                                <th scope="col">Raza</th>
-                                                <th scope="col">Fecha de Nacimiento</th>
-                                                <th scope="col"></th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach($caninos as $canino)
-                                                    @if(Auth::check() && Auth::user()->id == $canino->user->id)
-                                                    <tr>
-                                                        <th scope="row">
-                                                            <div class="media align-items-center">
-                                                                <a href="#" class="avatar rounded-circle mr-3">
-                                                                    @if(Storage::disk('images')->has($canino->image))
-                                                                    <img alt="Image placeholder" src="{{ url('/image/'.$canino->image) }}">
-                                                                    @endif
-                                                                </a>
-                                                                <div class="media-body">
-                                                                    <span class="mb-0 text-sm">{{$canino->nombre}}</span>
-                                                                </div>
-                                                            </div>
-                                                        </th>
-                                                        <td>
-                                                            {{$canino->raza}}
-                                                        </td>
-                                                        <td>
-                                                            {{$canino->nacimiento}}
-                                                        </td>
-                                                        <td class="text-right">
-                                                            <div class="dropdown">
-                                                                <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                    <i class="fas fa-ellipsis-v"></i>
-                                                                </a>
-                                                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                                                    <a class="dropdown-item" href="">Ver</a>
-                                                                    @if(Auth::check() && Auth::user()->id == $canino->user->id)
-                                                                    <a class="dropdown-item" href="{{ url('/editarCanino/'.$canino->id) }}">Editar</a>
-                                                                    <a id="#modal{{$canino->id}}" class="dropdown-item" href="{{ url( '/eliminarCanino/'.$canino->id) }}">Eliminar</a>
-
-                                                                        <div id="modal{{$canino->id}}" class="modal fade">
-                                                                            <div class="modal-dialog">
-                                                                                <div class="modal-content">
-                                                                                    <div class="modal-header">
-                                                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                                                                        <h4 class="modal-title">¿Estás seguro?</h4>
-                                                                                    </div>
-                                                                                    <div class="modal-body">
-                                                                                        <p>¿Seguro que quieres borrar este video?</p>
-                                                                                        <p class="text-warning"><small>{{$canino->nombre}}</small></p>
-                                                                                    </div>
-                                                                                    <div class="modal-footer">
-                                                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                                                                                        <a href="{{ url('/eliminarCanino/'.$canino->id) }}" type="button" class="btn btn-danger">Eliminar</a>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-
-                                                                    @endif
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    @endif
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="card-footer py-4">
-                                        <nav aria-label="...">
-                                            <ul class="pagination justify-content-end mb-0">
-                                                {{$caninos->links()}}
-                                            </ul>
-                                        </nav>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div class="col-xl-6 order-xl-1">
                 <div class="card bg-secondary shadow">
                     <div class="row justify-content-center">
                         <div class="col-lg-3 order-lg-2">
                             <div class="card-profile-image">
                                 <a href="#">
-                                    <img src="../assets/img/theme/team-4-800x800.jpg" class="rounded-circle">
+                                    <img src="{{ url('/imagePerfil/'.Auth::user()->image) }}" class="rounded-circle">
                                 </a>
                             </div>
                         </div>
@@ -460,6 +358,107 @@
                                 </div>
                             </div>
                         </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6 order-xl-2 mb-5 mb-xl-0">
+                <div class="card card-profile shadow">
+                    <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
+                        <div class="d-flex justify-content-between">
+                            <h3 class="mb-0">MASCOTAS</h3>
+                            <a href="crearCanino" class="btn btn-sm btn-default float-right">Agregar</a>
+                        </div>
+                    </div>
+                    <div class="card-body pt-0 pt-md-4">
+                        <div class="card-body">
+                            <hr class="my-4" />
+                            <div class="row">
+                                <div class="col">
+                                    <div class="card-header border-0">
+                                        <h3 class="mb-0">Listado Mascotas</h3>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="table align-items-center table-flush">
+                                            <thead class="thead-light">
+                                            <tr>
+                                                <th scope="col">Nombre</th>
+                                                <th scope="col">Raza</th>
+                                                <th scope="col">Fecha de Nacimiento</th>
+                                                <th scope="col"></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach($caninos as $canino)
+                                                    @if(Auth::check() && Auth::user()->id == $canino->user->id)
+                                                    <tr>
+                                                        <th scope="row">
+                                                            <div class="media align-items-center">
+                                                                <a href="#" class="avatar rounded-circle mr-3">
+                                                                    @if(Storage::disk('images')->has($canino->image))
+                                                                    <img alt="Image placeholder" src="{{ url('/image/'.$canino->image) }}">
+                                                                    @endif
+                                                                </a>
+                                                                <div class="media-body">
+                                                                    <span class="mb-0 text-sm">{{$canino->nombre}}</span>
+                                                                </div>
+                                                            </div>
+                                                        </th>
+                                                        <td>
+                                                            {{$canino->raza}}
+                                                        </td>
+                                                        <td>
+                                                            {{$canino->nacimiento}}
+                                                        </td>
+                                                        <td class="text-right">
+                                                            <div class="dropdown">
+                                                                <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                    <i class="fas fa-ellipsis-v"></i>
+                                                                </a>
+                                                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                                                    <a class="dropdown-item" href="">Ver</a>
+                                                                    @if(Auth::check() && Auth::user()->id == $canino->user->id)
+                                                                    <a class="dropdown-item" href="{{ url('/editarCanino/'.$canino->id) }}">Editar</a>
+                                                                    <a id="#modal{{$canino->id}}" class="dropdown-item" href="{{ url( '/eliminarCanino/'.$canino->id) }}">Eliminar</a>
+
+                                                                        <div id="modal{{$canino->id}}" class="modal fade">
+                                                                            <div class="modal-dialog">
+                                                                                <div class="modal-content">
+                                                                                    <div class="modal-header">
+                                                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                                                        <h4 class="modal-title">¿Estás seguro?</h4>
+                                                                                    </div>
+                                                                                    <div class="modal-body">
+                                                                                        <p>¿Seguro que quieres borrar este video?</p>
+                                                                                        <p class="text-warning"><small>{{$canino->nombre}}</small></p>
+                                                                                    </div>
+                                                                                    <div class="modal-footer">
+                                                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                                                                        <a href="{{ url('/eliminarCanino/'.$canino->id) }}" type="button" class="btn btn-danger">Eliminar</a>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    @endif
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    @endif
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="card-footer py-4">
+                                        <nav aria-label="...">
+                                            <ul class="pagination justify-content-end mb-0">
+                                                {{$caninos->links()}}
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

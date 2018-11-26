@@ -16,6 +16,7 @@
     <link href="../assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
     <!-- Argon CSS -->
     <link type="text/css" href="../assets/css/argon.css?v=1.0.0" rel="stylesheet">
+
 </head>
 
 <body>
@@ -87,7 +88,7 @@
             <div class="navbar-collapse-header d-md-none">
                 <div class="row">
                     <div class="col-6 collapse-brand">
-                        <a href="../home">
+                        <a href="../homeCuidador">
                             <img src="../assets/img/brand/blue.png">
                         </a>
                     </div>
@@ -113,12 +114,12 @@
             <!-- Navigation -->
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="../home">
+                    <a class="nav-link" href="../cuidador">
                         <i class="ni ni-pin-3 text-purple"></i> Cuidador
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="../home">
+                    <a class="nav-link active" href="../homeCuidador">
                         <i class="ni ni-single-02 text-blue"></i> Perfil
                     </a>
                 </li>
@@ -132,7 +133,7 @@
     <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
         <div class="container-fluid">
             <!-- Brand -->
-            <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="../home">Perfil</a>
+            <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="../homeCuidador">Perfil</a>
             <!-- Form -->
             <form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
                 <div class="form-group mb-0">
@@ -161,7 +162,7 @@
                     <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <div class="media align-items-center">
                 <span class="avatar avatar-sm rounded-circle">
-                  <img alt="Image placeholder" src="../assets/img/theme/team-4-800x800.jpg">
+                  <img alt="Image placeholder" src="{{ url('/imagePerfil/'.Auth::user()->image) }}">
                 </span>
                             <div class="media-body ml-2 d-none d-lg-block">
                                 <span class="mb-0 text-sm  font-weight-bold">{{ Auth::user()->name }}</span>
@@ -209,8 +210,7 @@
             <div class="row">
                 <div class="col-lg-7 col-md-10">
                     <h1 class="display-2 text-white">Hola {{ Auth::user()->name }} {{ Auth::user()->apellido }} </h1>
-                    <p class="text-white mt-0 mb-5"></p>
-                    <a href="./crearCanino" class="btn btn-info">Mascotas</a>
+                    <p class="text-white mt-0 mb-5"></p>>
                 </div>
             </div>
         </div>
@@ -218,31 +218,13 @@
     <!-- Page content -->
     <div class="container-fluid mt--7">
         <div class="row">
-            <div class="col-xl-6 order-xl-2 mb-5 mb-xl-0">
-                <div class="card card-profile shadow">
-                    <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
-                        <div class="d-flex justify-content-between">
-                            <h3 class="mb-0">MASCOTAS</h3>
-                            <a href="crearCanino" class="btn btn-sm btn-default float-right">Agregar</a>
-                        </div>
-                    </div>
-                    <div class="card-body pt-0 pt-md-4">
-                        <div class="card-body">
-                            <hr class="my-4" />
-                            <div class="row">
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div class="col-xl-6 order-xl-1">
                 <div class="card bg-secondary shadow">
                     <div class="row justify-content-center">
                         <div class="col-lg-3 order-lg-2">
                             <div class="card-profile-image">
                                 <a href="#">
-                                    <img src="../assets/img/theme/team-4-800x800.jpg" class="rounded-circle">
+                                    <img src="{{ url('/imagePerfil/'.Auth::user()->image) }}" class="rounded-circle">
                                 </a>
                             </div>
                         </div>
@@ -254,7 +236,7 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('updateCuidador') }}">
+                        <form method="POST" action="{{ route('updateCuidador') }}" enctype="multipart/form-data">
                             @csrf
                             <h4 class="text-muted mb-4">Perfil Propietario</h4>
                             <h6 class="heading-small text-muted mb-4">Informacion de usuario</h6>
@@ -284,40 +266,15 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-12">
                                         <div class="form-group">
                                             <label class="form-control-label" for="email">Correo electronico</label>
-                                            <input type="email" id="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ Auth::user()->email }}" placeholder="jesse@example.com" required>
+                                            <input type="email" id="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ Auth::user()->email }}" placeholder="jesse@example.com" disabled>
                                             @if ($errors->has('email'))
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $errors->first('email') }}</strong>
                                                 </span>
                                             @endif
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label class="form-control-label" for="tipo_usuario">Tipo de usuario</label>
-                                            <input type="text" id="tipo_usuario" class="form-control form-control-alternative" value="Cuidador" disabled>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label class="form-control-label" for="password">{{ __('Contraseña') }}</label>
-                                            <input type="password" id="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" placeholder="Contraseña">
-                                            @if ($errors->has('password'))
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $errors->first('password') }}</strong>
-                                                </span>
-                                            @endif
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label class="form-control-label" for="password-confirm">{{ __('Confirme la contraseña') }}</label>
-                                            <input type="password" id="password-confirm" class="form-control" name="password_confirmation" placeholder="Contraseña">
                                         </div>
                                     </div>
                                 </div>
@@ -341,8 +298,8 @@
                                             <input type="text" id="zona" class="form-control{{ $errors->has('zona') ? ' is-invalid' : '' }}" name="zona" value="{{ Auth::user()->zona }}" placeholder="Zona" pattern="[a-zA-Z0-9 ]+" required>
                                             @if ($errors->has('zona'))
                                                 <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $errors->first('zona') }}</strong>
-                                                </span>
+                                                        <strong>{{ $errors->first('zona') }}</strong>
+                                                    </span>
                                             @endif
                                         </div>
                                     </div>
@@ -394,14 +351,6 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label class="form-control-label" for="foto">Subir foto personal</label>
-                                            <input type="file" id="foto" class="form-control" name="foto" accept="image/*"/>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="form-group">
                                             <label class="form-control-label" for="ci">{{ __('Carnet de Identidad') }}</label>
                                             <input type="text" id="ci" class="form-control{{ $errors->has('ci') ? ' is-invalid' : '' }}" name="ci" value="{{ Auth::user()->ci }}" placeholder="Carnet de Identidad" pattern="[a-zA-Z0-9., ]+" required>
                                             @if ($errors->has('ci'))
@@ -411,21 +360,11 @@
                                             @endif
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label class="form-control-label" for="foto_ci_anverso">Subir foto carnet (Anverso)</label>
-                                            <input type="file" id="foto_ci_anverso" class="form-control" name="foto_ci_anverso" accept="image/*"/>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label class="form-control-label" for="foto_ci_reverso">Subir foto carnet (Reverso)</label>
-                                            <input type="file" id="foto_ci_reverso" class="form-control" name="foto_ci_reverso" accept="image/*"/>
-                                        </div>
-                                    </div>
+                                </div>
+                                <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="form-control-label" for="numero_canes">{{ __('¿Cuantos perros tiene en casa?') }}</label>
+                                            <label class="form-control-label" for="direccion">{{ __('¿Cuantos perros tiene en casa?') }}</label>
                                             <input type="number" id="numero_canes" class="form-control{{ $errors->has('numero_canes') ? ' is-invalid' : '' }}" name="numero_canes" value="{{ Auth::user()->numero_canes }}" placeholder="¿Cuantos perros tiene en casa?" pattern="[0-9 ]+" required>
                                             @if ($errors->has('numero_canes'))
                                                 <span class="invalid-feedback" role="alert">
@@ -443,6 +382,14 @@
                                                     <strong>{{ $errors->first('nacimiento') }}</strong>
                                                 </span>
                                             @endif
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="image">Subir foto del propietario</label>
+                                            <input type="file" id="image" class="form-control" name="image" accept="image/*" value="{{ Auth::user()->image }}"/>
                                         </div>
                                     </div>
                                 </div>
@@ -577,7 +524,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <hr/>
+                            <hr class="my-4" />
                             <div class="row" align="center">
                                 <div class="col-lg-12">
                                     <div class="col-md-12">
@@ -689,14 +636,176 @@
                                 </div>
                             </div>
                             <hr class="my-4" />
-                            <div class="form-group row mb-0">
-                                <div class="col-md-12 offset-md-5">
-                                    <button type="submit" class="btn btn-primary">
-                                        {{ __('Editar') }}
-                                    </button>
+                            <h4 class="text-muted mb-4">Servicios</h4>
+                            <div class="pl-lg-4">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-12">
+                                            <small class="text-uppercase font-weight-bold">{{ __('Alojamiento') }}</small>
+                                        </div>
+                                        @if(Auth::user()->alojamiento == 'Si')
+                                            <div class="col-lg-12">
+                                                <div class="custom-control custom-control-inline custom-radio mb-3">
+                                                    <input name="alojamiento" class="custom-control-input" id="alojamiento" checked type="radio" value="Si">
+                                                    <label class="custom-control-label" for="alojamiento">
+                                                        <span>Si</span>
+                                                    </label>
+                                                </div>
+                                                <div class="custom-control custom-control-inline custom-radio mb-3">
+                                                    <input name="alojamiento" class="custom-control-input" id="alojamiento_no" type="radio" value="No">
+                                                    <label class="custom-control-label" for="alojamiento_no">
+                                                        <span>No</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        @elseif(Auth::user()->alojamiento == 'No')
+                                            <div class="col-lg-12">
+                                                <div class="custom-control custom-control-inline custom-radio mb-3">
+                                                    <input name="alojamiento" class="custom-control-input" id="alojamiento" type="radio" value="Si">
+                                                    <label class="custom-control-label" for="alojamiento">
+                                                        <span>Si</span>
+                                                    </label>
+                                                </div>
+                                                <div class="custom-control custom-control-inline custom-radio mb-3">
+                                                    <input name="alojamiento" class="custom-control-input" id="alojamiento_no" checked type="radio" value="No">
+                                                    <label class="custom-control-label" for="alojamiento_no">
+                                                        <span>No</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="name">{{ __('Precio Por Dia') }}</label>
+                                            <input type="number" id="precio_alojamiento" class="form-control{{ $errors->has('precio_alojamiento') ? ' is-invalid' : '' }}" name="precio_alojamiento" value="{{ Auth::user()->precio_alojamiento }}" placeholder="Precio Por Dia" pattern="[0-9 ]+">
+                                            @if ($errors->has('precio_alojamiento'))
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $errors->first('precio_alojamiento') }}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="name">{{ __('Precio Adicional de Entrega o Recogida') }}</label>
+                                            <input type="number" id="precio_adicional_alojamiento" class="form-control{{ $errors->has('precio_adicional_alojamiento') ? ' is-invalid' : '' }}" name="precio_adicional_alojamiento" value="{{ Auth::user()->precio_adicional_alojamiento }}" placeholder="Precio Por Dia" pattern="[0-9 ]+">
+                                            @if ($errors->has('precio_adicional_alojamiento'))
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $errors->first('precio_adicional_alojamiento') }}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="direccion_recogida">{{ __('Direccion de Recogida') }}</label>
+                                            <input type="text" id="direccion_recogida" class="form-control{{ $errors->has('direccion_recogida') ? ' is-invalid' : '' }}" name="direccion_recogida" value="{{ Auth::user()->direccion_recogida }}" placeholder="Direccion de Entrega">
+                                            @if ($errors->has('direccion_recogida'))
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $errors->first('direccion_recogida') }}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="my-4" />
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-12">
+                                            <small class="text-uppercase font-weight-bold">{{ __('Paseo') }}</small>
+                                        </div>
+                                        @if(Auth::user()->paseo == 'Si')
+                                            <div class="col-lg-12">
+                                                <div class="custom-control custom-control-inline custom-radio mb-3">
+                                                    <input name="paseo" class="custom-control-input" id="paseo" checked type="radio" value="Si">
+                                                    <label class="custom-control-label" for="paseo">
+                                                        <span>Si</span>
+                                                    </label>
+                                                </div>
+                                                <div class="custom-control custom-control-inline custom-radio mb-3">
+                                                    <input name="paseo" class="custom-control-input" id="paseo_no" type="radio" value="No">
+                                                    <label class="custom-control-label" for="paseo_no">
+                                                        <span>No</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        @elseif(Auth::user()->paseo == 'No')
+                                            <div class="col-lg-12">
+                                                <div class="custom-control custom-control-inline custom-radio mb-3">
+                                                    <input name="paseo" class="custom-control-input" id="paseo" type="radio" value="Si">
+                                                    <label class="custom-control-label" for="paseo">
+                                                        <span>Si</span>
+                                                    </label>
+                                                </div>
+                                                <div class="custom-control custom-control-inline custom-radio mb-3">
+                                                    <input name="paseo" class="custom-control-input" id="paseo_no" checked type="radio" value="No">
+                                                    <label class="custom-control-label" for="paseo_no">
+                                                        <span>No</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="name">{{ __('Precio Por Dia') }}</label>
+                                            <input type="number" id="precio_paseo" class="form-control{{ $errors->has('precio_paseo') ? ' is-invalid' : '' }}" name="precio_paseo" value="{{ Auth::user()->precio_paseo }}" placeholder="Precio Por Hora" pattern="[0-9 ]+">
+                                            @if ($errors->has('precio_paseo'))
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $errors->first('precio_paseo') }}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="direccion_recogida_paseo">{{ __('Direccion de Recogida') }}</label>
+                                            <input type="text" id="direccion_recogida_paseo" class="form-control{{ $errors->has('direccion_recogida_paseo') ? ' is-invalid' : '' }}" name="direccion_recogida_paseo" value="{{ Auth::user()->direccion_recogida_paseo }}" placeholder="Direccion de Entrega">
+                                            @if ($errors->has('direccion_recogida_paseo'))
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $errors->first('direccion_recogida_paseo') }}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="my-4" />
+                                <div class="form-group row mb-0">
+                                    <div class="col-md-12" align="center">
+                                        <a href="./homeCuidador" class="btn btn-neutral">{{ __('Cancelar') }}</a>
+                                        <button type="submit" class="btn btn-primary">
+                                            {{ __('Editar') }}
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6 order-xl-2 mb-5 mb-xl-0">
+                <div class="card card-profile shadow">
+                    <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
+                        <div class="d-flex justify-content-between">
+                            <h3 class="mb-0">SERVICIOS</h3>
+                            <a href="crearCanino" class="btn btn-sm btn-default float-right">Agregar</a>
+                        </div>
+                    </div>
+                    <div class="card-body pt-0 pt-md-4">
+                        <div class="card-body">
+                            <hr class="my-4" />
+                            <div class="row">
+                                <form>
+                                    @csrf
+                                    <h4 class="text-muted mb-4">Servicios</h4>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -717,10 +826,24 @@
 <!-- Core -->
 <script src="../assets/vendor/jquery/dist/jquery.min.js"></script>
 <script src="../assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="./assets2/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+
+<script type="text/javascript">
+
+    $('.date').datepicker({
+        format: 'yyyy-mm-dd',
+        language: 'es',
+        autoclose: true
+
+    });
+
+</script>
+
 <!-- Argon JS -->
 <script src="../assets/js/argon.js?v=1.0.0"></script>
 </body>
 
 </html>
+
 
 

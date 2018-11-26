@@ -19,6 +19,8 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('/home1', 'HomeController@index1')->name('home1');
+
 Route::get('/homeCuidador', 'HomeController@indexCuidador')->name('homeCuidador');
 
 Route::get('/cuidador', 'UserController@listCuidador')->name('cuidador');
@@ -62,6 +64,11 @@ Route::post('/actualizarCuidador',array(
     'uses' => 'UserController@updateUserCuidador'
 ));
 
+Route::get('/imagePerfil/{filename}', array(
+    'as' => 'imagePerfil',
+    'uses' => 'UserController@getImagePerfil'
+));
+
 Route::get('/crearCanino',array(
     'as' => 'createCanino',
     'middleware' => 'auth',
@@ -96,3 +103,6 @@ Route::get('/eliminarCanino/{canino_id}', array(
     'middleware' => 'auth',
     'uses' => 'CaninoController@deleteCanino'
 ));
+
+Route::get('events', 'EventController@index')->name('eventsIndex');
+Route::post('events', 'EventController@addEvent')->name('eventsAdd');
