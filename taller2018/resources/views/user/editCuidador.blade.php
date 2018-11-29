@@ -181,7 +181,7 @@
                             <i class="fas fa-paw"></i>
                             <span>Mascotas</span>
                         </a>
-                        <a href="#" class="dropdown-item">
+                        <a href="/crearEvent" class="dropdown-item">
                             <i class="ni ni-calendar-grid-58"></i>
                             <span>Servicio</span>
                         </a>

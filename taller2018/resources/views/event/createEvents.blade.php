@@ -16,6 +16,7 @@
     <link href="../assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
     <!-- Argon CSS -->
     <link type="text/css" href="../assets/css/argon.css?v=1.0.0" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.2.7/fullcalendar.min.css"/>
 </head>
 
 <body>
@@ -35,8 +36,8 @@
             <a class="navbar-brand pt-0" href="../homeCuidador">
                 <img src="../assets/img/brand/blue.png" class="navbar-brand-img" alt="...">
             </a>
-        @endif
-        <!-- User -->
+    @endif
+    <!-- User -->
         <ul class="nav align-items-center d-md-none">
             <li class="nav-item dropdown">
                 <a class="nav-link nav-link-icon" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -148,8 +149,8 @@
                 <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="../home">Perfil</a>
             @elseif(Auth::user()->tipo_usuario == 'Cuidador')
                 <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="../homeCuidador">Perfil</a>
-            @endif
-            <!-- Form -->
+        @endif
+        <!-- Form -->
             <form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
                 <div class="form-group mb-0">
                     <div class="input-group input-group-alternative">
@@ -224,8 +225,8 @@
         <div class="container-fluid d-flex align-items-center">
             <div class="row">
                 <div class="col-lg-7 col-md-10">
-                    <h1 class="display-2 text-white">Cuidadores</h1>
-                    <p class="text-white mt-0 mb-5"></p>
+                    <h1 class="display-2 text-white">Disponibilidad</h1>
+                    <p class="text-white mt-0 mb-5"></p>>
                 </div>
             </div>
         </div>
@@ -233,77 +234,91 @@
     <!-- Page content -->
     <div class="container-fluid mt--7">
         <div class="row">
-            <div class="col">
-                <div class="card shadow">
-                    <div class="card-header border-0">
-                        <h3 class="mb-0">Cuidadores</h3>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table align-items-center table-flush">
-                            <thead class="thead-light">
-                            <tr>
-                                <th scope="col">Nombre Completo</th>
-                                <th scope="col">Descripcion</th>
-                                <th scope="col">Alojamiento</th>
-                                <th scope="col">Paseo</th>
-                                <th scope="col"></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($users as $user)
-                            <tr>
-                                <th scope="row">
-                                    <div class="media align-items-center">
-                                        <a href="#" class="avatar rounded-circle mr-3">
-                                            <img src="{{ url('/imagePerfil/'.$user->image) }}" class="rounded-circle">
-                                        </a>
-                                        <div class="media-body">
-                                            <span class="mb-0 text-sm">{{$user->name}} {{$user->apellido}}</span>
-                                        </div>
-                                    </div>
-                                </th>
-                                <td>
-                                    {{$user->descripcion}}
-                                </td>
-                                <td>
-                                    <span class="badge badge-dot mr-4">
-                                        @if($user->alojamiento == 'Si')
-                                            Bs. {{$user->precio_alojamiento}}
-                                        @endif
-                                    </span>
-                                </td>
-                                <td>
-                                    <span class="badge badge-dot mr-4">
-                                        @if($user->paseo == 'Si')
-                                            Bs. {{$user->precio_paseo}}
-                                        @endif
-                                    </span>
-                                </td>
-                                <td class="text-right">
-                                    <div class="dropdown">
-                                        <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                            <a class="dropdown-item" href="#">Action</a>
-                                            <a class="dropdown-item" href="#">Another action</a>
-                                            <a class="dropdown-item" href="#">Something else here</a>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
-                        <div class="card-footer py-4">
-                            <nav aria-label="...">
-                                <ul class="pagination justify-content-end mb-0">
-                                    {{$users->links()}}
-                                </ul>
-                            </nav>
+            <div class="col-xl-6 order-xl-1  mb-xl-0">
+                <div class="card bg-secondary shadow">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-3 order-lg-2">
+                            <div class="card-profile-image">
+                                <a href="#">
+                                </a>
+                            </div>
                         </div>
                     </div>
-
+                    <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
+                        <div class="d-flex justify-content-between">
+                            <h3 class="mb-0">Dias Ocupados</h3>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form method="POST" action="{{ route('eventsAdd') }}" enctype="multipart/form-data">
+                            @csrf
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="event_name">{{ __('Disponibilidad') }}</label>
+                                        <input type="text" id="event_name" class="form-control{{ $errors->has('event_name') ? ' is-invalid' : '' }}" name="event_name" value="{{ old('event_name') }}" placeholder="Disponibilidad" pattern="[a-zA-Z ]+" required autofocus>
+                                        @if ($errors->has('event_name'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('event_name') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <div class="input-daterange datepicker row align-items-center">
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
+                                                        </div>
+                                                        <input class="form-control" placeholder="Start date" type="text" id="start_date" name="start_date">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
+                                                        </div>
+                                                        <input class="form-control" placeholder="End date" type="text" id="end_date" name="end_date">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-0">
+                                <div class="col-md-12 offset-md-5">
+                                    <button type="submit" class="btn btn-primary">
+                                        {{ __('Registrarse') }}
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6 order-xl-2 mb-5 mb-xl-0">
+                <div class="card card-profile shadow">
+                    <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
+                        <div class="d-flex justify-content-between">
+                            <h3 class="mb-0">SERVICIOS</h3>
+                        </div>
+                    </div>
+                    <div class="card-body pt-0 pt-md-4">
+                        <div class="card-body">
+                            <div class="row">
+                                <form>
+                                    @csrf
+                                    {!! $calendar_details->calendar() !!}
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -323,10 +338,24 @@
 <!-- Core -->
 <script src="../assets/vendor/jquery/dist/jquery.min.js"></script>
 <script src="../assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="./assets2/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+
+<script type="text/javascript">
+
+    $('.date').datepicker({
+        format: 'yyyy-mm-dd',
+        language: 'es',
+        autoclose: true
+
+    });
+
+</script>
+<!--<script src="https://code.jquery.com/jquery.js"></script>-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.2.7/fullcalendar.min.js"></script>
+{!! $calendar_details->script() !!}
 <!-- Argon JS -->
 <script src="../assets/js/argon.js?v=1.0.0"></script>
 </body>
 
 </html>
-
-

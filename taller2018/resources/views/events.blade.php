@@ -208,7 +208,7 @@
         <div class="container-fluid d-flex align-items-center">
             <div class="row">
                 <div class="col-lg-7 col-md-10">
-                    <p class="text-white mt-0 mb-5"></p>>
+                    <p class="text-white mt-0 mb-5"></p>
                 </div>
             </div>
         </div>

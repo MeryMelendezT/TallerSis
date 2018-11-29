@@ -104,5 +104,20 @@ Route::get('/eliminarCanino/{canino_id}', array(
     'uses' => 'CaninoController@deleteCanino'
 ));
 
-Route::get('events', 'EventController@index')->name('eventsIndex');
-Route::post('events', 'EventController@addEvent')->name('eventsAdd');
+Route::get('/crearEvent/', array(
+    'as' => 'crearEvent',
+    'middleware' => 'auth',
+    'uses' => 'EventController@createEvent'
+));
+
+Route::get('/events', array(
+    'as' => 'eventsIndex',
+    'middleware' => 'auth',
+    'uses' => 'EventController@index'
+));
+
+Route::post('/events', array(
+    'as' => 'eventsAdd',
+    'middleware' => 'auth',
+    'uses' => 'EventController@addEvent'
+));

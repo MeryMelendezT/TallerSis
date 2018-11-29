@@ -173,7 +173,7 @@
                         <div class=" dropdown-header noti-title">
                             <h6 class="text-overflow m-0">DogCare</h6>
                         </div>
-                        <a href="#" class="dropdown-item">
+                        <a href="/homeCuidador" class="dropdown-item">
                             <i class="ni ni-single-02"></i>
                             <span>Mi perfil</span>
                         </a>
@@ -181,7 +181,7 @@
                             <i class="fas fa-paw"></i>
                             <span>Mascotas</span>
                         </a>
-                        <a href="#" class="dropdown-item">
+                        <a href="/crearEvent" class="dropdown-item">
                             <i class="ni ni-calendar-grid-58"></i>
                             <span>Servicio</span>
                         </a>
