@@ -255,17 +255,6 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label class="form-control-label" for="event_name">{{ __('Disponibilidad') }}</label>
-                                        <input type="text" id="event_name" class="form-control{{ $errors->has('event_name') ? ' is-invalid' : '' }}" name="event_name" value="{{ old('event_name') }}" placeholder="Disponibilidad" pattern="[a-zA-Z ]+" required autofocus>
-                                        @if ($errors->has('event_name'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('event_name') }}</strong>
-                                            </span>
-                                        @endif
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="form-group">
                                         <div class="input-daterange datepicker row align-items-center">
                                             <div class="col">
                                                 <div class="form-group">

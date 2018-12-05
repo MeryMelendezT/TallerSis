@@ -11,6 +11,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 use App\Canino;
 use App\User;
+use Carbon\Carbon;
+use Calendar;
+use App\Event;
 
 class UserController extends Controller
 {
@@ -18,6 +21,35 @@ class UserController extends Controller
         $users = User::where('tipo_usuario','Cuidador')->orderBy('id','desc')->paginate('5');
         return view('user.listCuidador', array(
             'users' => $users
+        ));
+    }
+
+    public function getProfileCuidador($user_id){
+        $user = User::find($user_id);
+        $events = Event::get()->where('user_id',$user_id);
+        $event_list = [];
+        foreach($events as $key => $event){
+            $event_list[] = Calendar::event(
+                $event->event_name,
+                true,
+                new \DateTime($event->start_date),
+                new \DateTime($event->end_date.' +1 day')
+            );
+        }
+        $calendar_details = Calendar::addEvents($event_list);
+
+        return view('user.profileCuidador', compact('calendar_details') , array(
+            'user' => $user
+        ));
+    }
+
+    public function getProfilePropietario($user_id){
+        $user = User::find($user_id);
+        $caninos = Canino::orderBy('nacimiento','desc')->paginate(5);
+        return view('user.profilePropietario', array(
+            'user' => $user
+        ), array(
+            'caninos' => $caninos
         ));
     }
 

@@ -16,6 +16,8 @@
     <link href="../assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
     <!-- Argon CSS -->
     <link type="text/css" href="../assets/css/argon.css?v=1.0.0" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.2.7/fullcalendar.min.css"/>
+
 </head>
 
 <body>
@@ -224,7 +226,7 @@
         <div class="container-fluid d-flex align-items-center">
             <div class="row">
                 <div class="col-lg-7 col-md-10">
-                    <h1 class="display-2 text-white">Cuidadores</h1>
+                    <h1 class="display-2 text-white">Propietarios</h1>
                     <p class="text-white mt-0 mb-5"></p>
                 </div>
             </div>
@@ -240,7 +242,7 @@
                             <div class="col-lg-3 order-lg-2">
                                 <div class="card-profile-image">
                                     <a href="#">
-                                        <img src="../assets/img/theme/team-4-800x800.jpg" class="rounded-circle">
+                                        <img src="{{ url('/image/'.$canino->image) }}" class="rounded-circle">
                                     </a>
                                 </div>
                             </div>
@@ -252,33 +254,183 @@
                             </div>
                             <div class="col-lg-4 order-lg-1">
                                 <div class="card-profile-stats d-flex justify-content-center">
-                                    <div>
-                                        <span class="heading">22</span>
-                                        <span class="description">Friends</span>
-                                    </div>
-                                    <div>
-                                        <span class="heading">10</span>
-                                        <span class="description">Photos</span>
-                                    </div>
-                                    <div>
-                                        <span class="heading">89</span>
-                                        <span class="description">Comments</span>
-                                    </div>
+
                                 </div>
                             </div>
                         </div>
                         <div class="text-center mt-5">
-                            <h3>Nombre cuidador
-                                <span class="font-weight-light">, edad</span>
-                            </h3>
-                            <div class="h6 font-weight-300"><i class="ni location_pin mr-2"></i>Departamento, Zona</div>
-                            <div><i class="ni education_hat mr-2"></i>Descripcion del servicio</div>
+                            <h1>{{$canino->nombre}}
+                            </h1>
+                            <div><i class="ni education_hat mr-2"></i>{{$canino->raza}} </div>
                         </div>
                         <div class="mt-5 py-5 border-top text-center">
                             <div class="row justify-content-center">
-                                <div class="col-lg-9">
-                                    <p>Poner tipo de casa, exteriores(jardin terraza balcon) en 6. en el otro lado precio pase y alojamiento servicio desde hasta en 6. en 12 comentarios puntuacion si puedes en estrellas</p>
-                                    <a href="#">Show more</a>
+                                <div class="col-lg-12">
+                                    <div class="row justify-content-center">
+                                        <div class="col-lg-3">
+                                            <div class="col-xl-12 col-lg-12">
+                                                <div class="card card-stats mb-4 mb-xl-0">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <h5 class="card-title text-uppercase text-muted mb-0">{{__('Genero')}}</h5>
+                                                                <span class="h2 font-weight-bold mb-0">{{$canino->genero}}</span>
+                                                            </div>
+                                                            <div class="col-auto">
+                                                                <div class="icon icon-shape bg-default text-white rounded-circle shadow">
+                                                                    <i class="fas fa-map-marked-alt"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="col-xl-12 col-lg-12">
+                                                <div class="card card-stats mb-4 mb-xl-12">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <h5 class="card-title text-uppercase text-muted mb-0">{{__('Edad')}}</h5>
+                                                                <span class="h2 font-weight-bold mb-0"> {{Carbon::parse($canino->nacimiento)->age }} años, {{Carbon::parse($canino->nacimiento)->month }} meses</span><p></p>
+                                                            </div>
+                                                            <div class="col-auto">
+                                                                <div class="icon icon-shape bg-default text-white rounded-circle shadow">
+                                                                    <i class="fas fa-route"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="col-xl-12 col-lg-12">
+                                                <div class="card card-stats mb-4 mb-xl-12">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <h5 class="card-title text-uppercase text-muted mb-0">{{__('Agresividad')}}</h5>
+                                                                <span class="h2 font-weight-bold mb-0"> {{$canino->agresivo}}</span><p></p>
+                                                            </div>
+                                                            <div class="col-auto">
+                                                                <div class="icon icon-shape bg-default text-white rounded-circle shadow">
+                                                                    <i class="fas fa-route"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="col-xl-12 col-lg-12">
+                                                <div class="card card-stats mb-4 mb-xl-12">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <h5 class="card-title text-uppercase text-muted mb-0">{{__('peso')}}</h5>
+                                                                <span class="h2 font-weight-bold mb-0"> {{$canino->peso}} Kilos</span><p></p>
+                                                            </div>
+                                                            <div class="col-auto">
+                                                                <div class="icon icon-shape bg-default text-white rounded-circle shadow">
+                                                                    <i class="fas fa-route"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="row justify-content-center">
+                                        <div class="col-lg-12">
+                                            <div class="col-xl-12 col-lg-12">
+                                                <div class="card card-stats mb-4 mb-xl-0">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <h5 class="card-title text-uppercase text-muted mb-0">{{__('Agresividad')}}</h5>
+                                                                <span class="h2 font-weight-bold mb-0"> {{$canino->agresivo}} </span>
+                                                            </div>
+                                                            <div class="col-auto">
+                                                                <div class="icon icon-shape bg-default text-white rounded-circle shadow">
+                                                                    <i class="fas fa-mobile-alt"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="row justify-content-center">
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="card-header border-0">
+                                                    <h3 class="mb-0">Listado Mascotas</h3>
+                                                </div>
+                                                <div class="table-responsive">
+                                                    <table class="table align-items-center table-flush">
+                                                        <thead class="thead-light">
+                                                        <tr>
+                                                            <th scope="col">Nombre</th>
+                                                            <th scope="col">Raza</th>
+                                                            <th scope="col">Fecha de Nacimiento</th>
+                                                            <th scope="col"></th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        @foreach($caninos as $canino)
+                                                                <tr>
+                                                                    <th scope="row">
+                                                                        <div class="media align-items-center">
+                                                                            <a href="#" class="avatar rounded-circle mr-3">
+                                                                                @if(Storage::disk('images')->has($canino->image))
+                                                                                    <img alt="Image placeholder" src="{{ url('/image/'.$canino->image) }}">
+                                                                                @endif
+                                                                            </a>
+                                                                            <div class="media-body">
+                                                                                <span class="mb-0 text-sm">{{$canino->nombre}}</span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </th>
+                                                                    <td>
+                                                                        {{$canino->raza}}
+                                                                    </td>
+                                                                    <td>
+                                                                        {{$canino->nacimiento}}
+                                                                    </td>
+                                                                    <td class="text-right">
+                                                                        <div class="dropdown">
+                                                                            <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                                <i class="fas fa-ellipsis-v"></i>
+                                                                            </a>
+                                                                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                                                                <a class="dropdown-item" href="">Ver</a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                        @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="card-footer py-4">
+                                                    <nav aria-label="...">
+                                                        <ul class="pagination justify-content-end mb-0">
+                                                            {{$caninos->links()}}
+                                                        </ul>
+                                                    </nav>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -304,6 +456,7 @@
 <script src="../assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Argon JS -->
 <script src="../assets/js/argon.js?v=1.0.0"></script>
+
 </body>
 
 </html>

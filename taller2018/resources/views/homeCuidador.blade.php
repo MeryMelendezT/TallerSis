@@ -16,7 +16,7 @@
     <link href="../assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
     <!-- Argon CSS -->
     <link type="text/css" href="../assets/css/argon.css?v=1.0.0" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.2.7/fullcalendar.min.css"/>
 </head>
 
 <body>
@@ -776,8 +776,8 @@
                 <div class="card card-profile shadow">
                     <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
                         <div class="d-flex justify-content-between">
-                            <h3 class="mb-0">SERVICIOS</h3>
-                            <a href="crearCanino" class="btn btn-sm btn-default float-right">Agregar</a>
+                            <h3 class="mb-0">DISPONIBILIDAD</h3>
+                            <a href="crearEvent" class="btn btn-sm btn-default float-right">Editar</a>
                         </div>
                     </div>
                     <div class="card-body pt-0 pt-md-4">
@@ -787,6 +787,7 @@
                                 <form>
                                     @csrf
                                     <h4 class="text-muted mb-4">Servicios</h4>
+                                    {!! $calendar_details->calendar() !!}
                                 </form>
                             </div>
                         </div>
@@ -822,6 +823,9 @@
     });
 
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.2.7/fullcalendar.min.js"></script>
+{!! $calendar_details->script() !!}
 
 <!-- Argon JS -->
 <script src="../assets/js/argon.js?v=1.0.0"></script>

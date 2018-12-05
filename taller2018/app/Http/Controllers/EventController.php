@@ -28,26 +28,8 @@ class EventController extends Controller
         return view('event.createEvents', compact('calendar_details'));
     }
 
-    public function index(){
-        $events = Event::get();
-        $event_list = [];
-        foreach($events as $key => $event){
-            $event_list[] = Calendar::event(
-                $event->event_name,
-                true,
-                new \DateTime($event->start_date),
-                new \DateTime($event->end_date.' +1 day')
-            );
-        }
-        $calendar_details = Calendar::addEvents($event_list);
-
-
-        return view('events', compact('calendar_details'));
-    }
-
     public function addEvent(Request $request){
         $validatedData = $this->validate($request, [
-            'event_name' => 'required',
             'start_date' => 'required',
             'end_date' => 'required',
         ]);
@@ -55,7 +37,7 @@ class EventController extends Controller
         $event = new Event();
         $user = \Auth::user();
         $event->user_id = $user->id;
-        $event->event_name = $request->input('event_name');
+        $event->event_name = 'Ocupado';
         $event->start_date = $request->input('start_date');
         $event->end_date = $request->input('end_date');
         $event->save();

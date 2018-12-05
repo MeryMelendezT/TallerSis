@@ -18,6 +18,21 @@ class CaninoController extends Controller
         return view('canino.createCanino');
     }
 
+    public function getProfileMascota($canino_id){
+        $user = User::all();
+        $canino = Canino::findOrFail($canino_id);
+        $user_id = $canino->user_id;
+        $caninos = Canino::OrderBy('nacimiento','desc')->where('user_id',$user_id)->paginate(5);
+
+
+        return view('canino.profileMascota', array(
+            'canino' => $canino
+        ), array(
+            'caninos' => $caninos
+        ), array(
+            'user' => $user
+        ));
+    }
 
     public function saveCanino(Request $request){
         $validatedData = $this->validate($request, [

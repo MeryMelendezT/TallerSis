@@ -213,6 +213,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'FormatTime' => App\Helpers\FormatTime::class,
         'Calendar' => \MaddHatter\LaravelFullcalendar\Facades\Calendar::class,
+        'Carbon' => 'Carbon\Carbon',
 
     ],
 

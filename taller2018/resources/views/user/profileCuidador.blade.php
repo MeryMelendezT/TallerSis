@@ -16,6 +16,8 @@
     <link href="../assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
     <!-- Argon CSS -->
     <link type="text/css" href="../assets/css/argon.css?v=1.0.0" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.2.7/fullcalendar.min.css"/>
+
 </head>
 
 <body>
@@ -240,7 +242,7 @@
                             <div class="col-lg-3 order-lg-2">
                                 <div class="card-profile-image">
                                     <a href="#">
-                                        <img src="../assets/img/theme/team-4-800x800.jpg" class="rounded-circle">
+                                        <img src="{{ url('/imagePerfil/'.$user->image) }}" class="rounded-circle">
                                     </a>
                                 </div>
                             </div>
@@ -268,17 +270,136 @@
                             </div>
                         </div>
                         <div class="text-center mt-5">
-                            <h3>Nombre cuidador
-                                <span class="font-weight-light">, edad</span>
+                            <h3>{{$user->name}}
+                                <span class="font-weight-light">, {{ Carbon::parse($user->nacimiento)->age }}</span>
                             </h3>
-                            <div class="h6 font-weight-300"><i class="ni location_pin mr-2"></i>Departamento, Zona</div>
-                            <div><i class="ni education_hat mr-2"></i>Descripcion del servicio</div>
+                            <div class="h4 font-weight-300"><i class="ni location_pin mr-2"></i>{{ $user->departamento }}, {{ $user->zona }}</div>
+                            <div><i class="ni education_hat mr-2"></i>{{ $user->descripcion }}</div>
                         </div>
                         <div class="mt-5 py-5 border-top text-center">
                             <div class="row justify-content-center">
-                                <div class="col-lg-9">
-                                    <p>Poner tipo de casa, exteriores(jardin terraza balcon) en 6. en el otro lado precio pase y alojamiento servicio desde hasta en 6. en 12 comentarios puntuacion si puedes en estrellas</p>
-                                    <a href="#">Show more</a>
+                                <div class="col-lg-6">
+                                    <div class="row justify-content-center">
+                                        <div class="col-lg-6">
+                                            <div class="col-xl-12 col-lg-12">
+                                                <div class="card card-stats mb-4 mb-xl-0">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <h5 class="card-title text-uppercase text-muted mb-0">{{__('Paseo')}}</h5>
+                                                                <span class="h2 font-weight-bold mb-0">{{ $user->precio_paseo }} Bs. por hora</span>
+                                                            </div>
+                                                            <div class="col-auto">
+                                                                <div class="icon icon-shape bg-default text-white rounded-circle shadow">
+                                                                    <i class="fas fa-walking"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="col-xl-12 col-lg-12">
+                                                <div class="card card-stats mb-4 mb-xl-12">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <h5 class="card-title text-uppercase text-muted mb-0">{{__('Alojamiento')}}</h5>
+                                                                <span class="h2 font-weight-bold mb-0">{{ $user->precio_alojamiento }} Bs. por dia</span>
+                                                            </div>
+                                                            <div class="col-auto">
+                                                                <div class="icon icon-shape bg-default text-white rounded-circle shadow">
+                                                                    <i class="fas fa-building"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="col-xl-12 col-lg-12">
+                                                <div class="card card-stats mb-4 mb-xl-12">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <h5 class="card-title text-uppercase text-muted mb-0">{{__('Tipo de Casa')}}</h5>
+                                                                <span class="h2 font-weight-bold mb-0">{{ $user->tipo_casa }}</span>
+                                                            </div>
+                                                            <div class="col-auto">
+                                                                <div class="icon icon-shape bg-default text-white rounded-circle shadow">
+                                                                    <i class="fas fa-home"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="col-xl-12 col-lg-12">
+                                                <div class="card card-stats mb-4 mb-xl-12">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <h5 class="card-title text-uppercase text-muted mb-0">{{__('Jardin')}}</h5>
+                                                                <span class="h2 font-weight-bold mb-0">{{ $user->jardin }}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="col-xl-12 col-lg-12">
+                                                <div class="card card-stats mb-4 mb-xl-12">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <h5 class="card-title text-uppercase text-muted mb-0">{{__('Balcon')}}</h5>
+                                                                <span class="h2 font-weight-bold mb-0">{{ $user->balcon }}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="col-xl-12 col-lg-12">
+                                                <div class="card card-stats mb-4 mb-xl-12">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <h5 class="card-title text-uppercase text-muted mb-0">{{__('Terraza')}}</h5>
+                                                                <span class="h2 font-weight-bold mb-0">{{ $user->terraza }}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            aca debe ir comentarios y puntuacion
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="row justify-content-center">
+                                        <div class="text-center">
+                                            <div class="d-flex justify-content-between">
+                                                <h3 class="mb-0">DISPONIBILIDAD</h3>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <form>
+                                                    @csrf
+                                                    {!! $calendar_details->calendar() !!}
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -304,6 +425,10 @@
 <script src="../assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Argon JS -->
 <script src="../assets/js/argon.js?v=1.0.0"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.2.7/fullcalendar.min.js"></script>
+{!! $calendar_details->script() !!}
+
 </body>
 
 </html>

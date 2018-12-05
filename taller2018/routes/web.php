@@ -69,6 +69,21 @@ Route::get('/imagePerfil/{filename}', array(
     'uses' => 'UserController@getImagePerfil'
 ));
 
+Route::get('/profileCuidador/{user_id}', array(
+    'as' => 'profileCuidador',
+    'uses' => 'UserController@getProfileCuidador'
+));
+
+Route::get('/profilePropietario/{user_id}', array(
+    'as' => 'profilePropietario',
+    'uses' => 'UserController@getProfilePropietario'
+));
+
+Route::get('/profileMascota/{canino_id}', array(
+    'as' => 'profileMascota',
+    'uses' => 'CaninoController@getProfileMascota'
+));
+
 Route::get('/crearCanino',array(
     'as' => 'createCanino',
     'middleware' => 'auth',
