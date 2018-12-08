@@ -28,11 +28,11 @@
         </button>
         <!-- Brand -->
         @if(\Auth::user()->tipo_usuario == 'Propietario')
-            <a class="navbar-brand pt-0" href="../home">
+            <a class="navbar-brand pt-0" href="{{ url('/profilePropietario/'.Auth::user()->id) }}">
                 <img src="../assets/img/brand/blue.png" class="navbar-brand-img" alt="...">
             </a>
         @elseif(\Auth::user()->tipo_usuario == 'Cuidador')
-            <a class="navbar-brand pt-0" href="../homeCuidador">
+            <a class="navbar-brand pt-0" href="{{ url('/profileCuidador/'.Auth::user()->id) }}">
                 <img src="../assets/img/brand/blue.png" class="navbar-brand-img" alt="...">
             </a>
     @endif
@@ -53,7 +53,7 @@
                 <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <div class="media align-items-center">
               <span class="avatar avatar-sm rounded-circle">
-                <img alt="Image placeholder" src="../assets/img/theme/team-4-800x800.jpg">
+                <img alt="Image placeholder" src="{{ url('/imagePerfil/'.Auth::user()->image) }}">
               </span>
                     </div>
                 </a>
@@ -61,18 +61,32 @@
                     <div class=" dropdown-header noti-title">
                         <h6 class="text-overflow m-0">DogCare</h6>
                     </div>
-                    <a href="#" class="dropdown-item">
-                        <i class="ni ni-single-02"></i>
-                        <span>Mi perfil</span>
-                    </a>
-                    <a href="#" class="dropdown-item">
-                        <i class="fas fa-paw"></i>
-                        <span>Mascotas</span>
-                    </a>
+                    @if(\Auth::user()->tipo_usuario == 'Propietario')
+                        <a href="{{ url('/profilePropietario/'.Auth::user()->id) }}" class="dropdown-item">
+                            <i class="ni ni-single-02"></i>
+                            <span>Mi perfil</span>
+                        </a>
+                    @elseif(\Auth::user()->tipo_usuario == 'Cuidador')
+                        <a href="{{ url('/profileCuidador/'.Auth::user()->id) }}" class="dropdown-item">
+                            <i class="ni ni-single-02"></i>
+                            <span>Mi perfil</span>
+                        </a>
+                    @endif
                     <a href="#" class="dropdown-item">
                         <i class="ni ni-calendar-grid-58"></i>
-                        <span>Servicio</span>
+                        <span>Servicios</span>
                     </a>
+                    @if(\Auth::user()->tipo_usuario == 'Propietario')
+                        <a href="/home" class="dropdown-item">
+                            <i class="fas fa-id-card"></i>
+                            <span>Mi Cuenta</span>
+                        </a>
+                    @elseif(\Auth::user()->tipo_usuario == 'Cuidador')
+                        <a href="/homeCuidador" class="dropdown-item">
+                            <i class="fas fa-id-card"></i>
+                            <span>Mi Cuenta</span>
+                        </a>
+                    @endif
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="{{ route('logout') }}"
                        onclick="event.preventDefault();
@@ -93,9 +107,15 @@
             <div class="navbar-collapse-header d-md-none">
                 <div class="row">
                     <div class="col-6 collapse-brand">
-                        <a href="../home">
-                            <img src="../assets/img/brand/blue.png">
-                        </a>
+                        @if(\Auth::user()->tipo_usuario == 'Propietario')
+                            <a href="{{ url('/profilePropietario/'.Auth::user()->id) }}" class="dropdown-item">
+                                <img src="../assets/img/brand/blue.png">
+                            </a>
+                        @elseif(\Auth::user()->tipo_usuario == 'Cuidador')
+                            <a href="{{ url('/profileCuidador/'.Auth::user()->id) }}" class="dropdown-item">
+                                <img src="../assets/img/brand/blue.png">
+                            </a>
+                        @endif
                     </div>
                     <div class="col-6 collapse-close">
                         <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#sidenav-collapse-main" aria-controls="sidenav-main" aria-expanded="false" aria-label="Toggle sidenav">
@@ -119,18 +139,29 @@
             <!-- Navigation -->
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link active" href="../cuidador">
+                    <a class="nav-link" href="../cuidador">
                         <i class="ni ni-pin-3 text-purple"></i> Cuidador
                     </a>
                 </li>
                 <li class="nav-item">
-                    @if(Auth::user()->tipo_usuario == 'Propietario')
-                        <a class="nav-link" href="../home">
+                    @if(\Auth::user()->tipo_usuario == 'Propietario')
+                        <a class="nav-link" href="{{ url('/profilePropietario/'.Auth::user()->id) }}" class="dropdown-item">
                             <i class="ni ni-single-02 text-blue"></i> Perfil
                         </a>
-                    @elseif(Auth::user()->tipo_usuario == 'Cuidador')
-                        <a class="nav-link" href="../homeCuidador">
+                    @elseif(\Auth::user()->tipo_usuario == 'Cuidador')
+                        <a class="nav-link" href="{{ url('/profileCuidador/'.Auth::user()->id) }}" class="dropdown-item">
                             <i class="ni ni-single-02 text-blue"></i> Perfil
+                        </a>
+                    @endif
+                </li>
+                <li class="nav-item">
+                    @if(\Auth::user()->tipo_usuario == 'Propietario')
+                        <a class="nav-link active" href="/home" class="dropdown-item">
+                            <i class="fas fa-id-card text-indigo"></i> Mi Cuenta
+                        </a>
+                    @elseif(\Auth::user()->tipo_usuario == 'Cuidador')
+                        <a class="nav-link active" href="/homeCuidador" class="dropdown-item">
+                            <i class="fas fa-id-card text-indigo"></i> Mi Cuenta
                         </a>
                     @endif
                 </li>
@@ -144,10 +175,11 @@
     <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
         <div class="container-fluid">
             <!-- Brand -->
-            @if(Auth::user()->tipo_usuario == 'Propietario')
-                <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="../home">Perfil</a>
-            @elseif(Auth::user()->tipo_usuario == 'Cuidador')
-                <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="../homeCuidador">Perfil</a>
+            @if(\Auth::user()->tipo_usuario == 'Propietario')
+                <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="{{ url('/profilePropietario/'.Auth::user()->id) }}">Perfil</a>
+
+            @elseif(\Auth::user()->tipo_usuario == 'Cuidador')
+                <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="{{ url('/profileCuidador/'.Auth::user()->id) }}">Perfil</a>
         @endif
         <!-- Form -->
             <form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
@@ -188,18 +220,32 @@
                         <div class=" dropdown-header noti-title">
                             <h6 class="text-overflow m-0">DogCare</h6>
                         </div>
-                        <a href="#" class="dropdown-item">
-                            <i class="ni ni-single-02"></i>
-                            <span>Mi perfil</span>
-                        </a>
-                        <a href="#" class="dropdown-item">
-                            <i class="fas fa-paw"></i>
-                            <span>Mascotas</span>
-                        </a>
+                        @if(\Auth::user()->tipo_usuario == 'Propietario')
+                            <a href="{{ url('/profilePropietario/'.Auth::user()->id) }}" class="dropdown-item">
+                                <i class="ni ni-single-02"></i>
+                                <span>Mi perfil</span>
+                            </a>
+                        @elseif(\Auth::user()->tipo_usuario == 'Cuidador')
+                            <a href="{{ url('/profileCuidador/'.Auth::user()->id) }}" class="dropdown-item">
+                                <i class="ni ni-single-02"></i>
+                                <span>Mi perfil</span>
+                            </a>
+                        @endif
                         <a href="#" class="dropdown-item">
                             <i class="ni ni-calendar-grid-58"></i>
-                            <span>Servicio</span>
+                            <span>Servicios</span>
                         </a>
+                        @if(\Auth::user()->tipo_usuario == 'Propietario')
+                            <a href="/home" class="dropdown-item">
+                                <i class="fas fa-id-card"></i>
+                                <span>Mi Cuenta</span>
+                            </a>
+                        @elseif(\Auth::user()->tipo_usuario == 'Cuidador')
+                            <a href="/homeCuidador" class="dropdown-item">
+                                <i class="fas fa-id-card"></i>
+                                <span>Mi Cuenta</span>
+                            </a>
+                        @endif
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{ route('logout') }}"
                            onclick="event.preventDefault();
@@ -224,7 +270,7 @@
         <div class="container-fluid d-flex align-items-center">
             <div class="row">
                 <div class="col-lg-7 col-md-10">
-                    <h1 class="display-2 text-white">Cuidadores</h1>
+                    <h1 class="display-2 text-white">Servicios</h1>
                     <p class="text-white mt-0 mb-5"></p>
                 </div>
             </div>
@@ -276,9 +322,15 @@
                         </div>
                         <div class="mt-5 py-5 border-top text-center">
                             <div class="row justify-content-center">
-                                <div class="col-lg-9">
-                                    <p>Poner tipo de casa, exteriores(jardin terraza balcon) en 6. en el otro lado precio pase y alojamiento servicio desde hasta en 6. en 12 comentarios puntuacion si puedes en estrellas</p>
-                                    <a href="#">Show more</a>
+                                <div class="col-lg-6">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <input type="datetime-local" id="nacimiento" class="form-control" name="nacimiento" placeholder="Seleccionar fecha de nacimiento" required>
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -304,6 +356,16 @@
 <script src="../assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Argon JS -->
 <script src="../assets/js/argon.js?v=1.0.0"></script>
+<script type="text/javascript">
+
+    $('.date').datetimepicker({
+        format: 'yyyy-mm-dd',
+        language: 'es',
+        autoclose: true
+
+    });
+
+</script>
 </body>
 
 </html>

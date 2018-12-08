@@ -30,11 +30,11 @@
         </button>
         <!-- Brand -->
         @if(\Auth::user()->tipo_usuario == 'Propietario')
-            <a class="navbar-brand pt-0" href="../home">
+            <a class="navbar-brand pt-0" href="{{ url('/profilePropietario/'.Auth::user()->id) }}">
                 <img src="../assets/img/brand/blue.png" class="navbar-brand-img" alt="...">
             </a>
         @elseif(\Auth::user()->tipo_usuario == 'Cuidador')
-            <a class="navbar-brand pt-0" href="../homeCuidador">
+            <a class="navbar-brand pt-0" href="{{ url('/profileCuidador/'.Auth::user()->id) }}">
                 <img src="../assets/img/brand/blue.png" class="navbar-brand-img" alt="...">
             </a>
     @endif
@@ -55,7 +55,7 @@
                 <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <div class="media align-items-center">
               <span class="avatar avatar-sm rounded-circle">
-                <img alt="Image placeholder" src="../assets/img/theme/team-4-800x800.jpg">
+                <img alt="Image placeholder" src="{{ url('/imagePerfil/'.Auth::user()->image) }}">
               </span>
                     </div>
                 </a>
@@ -63,18 +63,32 @@
                     <div class=" dropdown-header noti-title">
                         <h6 class="text-overflow m-0">DogCare</h6>
                     </div>
-                    <a href="#" class="dropdown-item">
-                        <i class="ni ni-single-02"></i>
-                        <span>Mi perfil</span>
-                    </a>
-                    <a href="#" class="dropdown-item">
-                        <i class="fas fa-paw"></i>
-                        <span>Mascotas</span>
-                    </a>
+                    @if(\Auth::user()->tipo_usuario == 'Propietario')
+                        <a href="{{ url('/profilePropietario/'.Auth::user()->id) }}" class="dropdown-item">
+                            <i class="ni ni-single-02"></i>
+                            <span>Mi perfil</span>
+                        </a>
+                    @elseif(\Auth::user()->tipo_usuario == 'Cuidador')
+                        <a href="{{ url('/profileCuidador/'.Auth::user()->id) }}" class="dropdown-item">
+                            <i class="ni ni-single-02"></i>
+                            <span>Mi perfil</span>
+                        </a>
+                    @endif
                     <a href="#" class="dropdown-item">
                         <i class="ni ni-calendar-grid-58"></i>
-                        <span>Servicio</span>
+                        <span>Servicios</span>
                     </a>
+                    @if(\Auth::user()->tipo_usuario == 'Propietario')
+                        <a href="/home" class="dropdown-item">
+                            <i class="fas fa-id-card"></i>
+                            <span>Mi Cuenta</span>
+                        </a>
+                    @elseif(\Auth::user()->tipo_usuario == 'Cuidador')
+                        <a href="/homeCuidador" class="dropdown-item">
+                            <i class="fas fa-id-card"></i>
+                            <span>Mi Cuenta</span>
+                        </a>
+                    @endif
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="{{ route('logout') }}"
                        onclick="event.preventDefault();
@@ -95,9 +109,15 @@
             <div class="navbar-collapse-header d-md-none">
                 <div class="row">
                     <div class="col-6 collapse-brand">
-                        <a href="../home">
-                            <img src="../assets/img/brand/blue.png">
-                        </a>
+                        @if(\Auth::user()->tipo_usuario == 'Propietario')
+                            <a href="{{ url('/profilePropietario/'.Auth::user()->id) }}" class="dropdown-item">
+                                <img src="../assets/img/brand/blue.png">
+                            </a>
+                        @elseif(\Auth::user()->tipo_usuario == 'Cuidador')
+                            <a href="{{ url('/profileCuidador/'.Auth::user()->id) }}" class="dropdown-item">
+                                <img src="../assets/img/brand/blue.png">
+                            </a>
+                        @endif
                     </div>
                     <div class="col-6 collapse-close">
                         <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#sidenav-collapse-main" aria-controls="sidenav-main" aria-expanded="false" aria-label="Toggle sidenav">
@@ -121,18 +141,29 @@
             <!-- Navigation -->
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link active" href="../cuidador">
+                    <a class="nav-link" href="../cuidador">
                         <i class="ni ni-pin-3 text-purple"></i> Cuidador
                     </a>
                 </li>
                 <li class="nav-item">
-                    @if(Auth::user()->tipo_usuario == 'Propietario')
-                        <a class="nav-link" href="../home">
+                    @if(\Auth::user()->tipo_usuario == 'Propietario')
+                        <a class="nav-link" href="{{ url('/profilePropietario/'.Auth::user()->id) }}" class="dropdown-item">
                             <i class="ni ni-single-02 text-blue"></i> Perfil
                         </a>
-                    @elseif(Auth::user()->tipo_usuario == 'Cuidador')
-                        <a class="nav-link" href="../homeCuidador">
+                    @elseif(\Auth::user()->tipo_usuario == 'Cuidador')
+                        <a class="nav-link" href="{{ url('/profileCuidador/'.Auth::user()->id) }}" class="dropdown-item">
                             <i class="ni ni-single-02 text-blue"></i> Perfil
+                        </a>
+                    @endif
+                </li>
+                <li class="nav-item">
+                    @if(\Auth::user()->tipo_usuario == 'Propietario')
+                        <a class="nav-link active" href="/home" class="dropdown-item">
+                            <i class="fas fa-id-card text-indigo"></i> Mi Cuenta
+                        </a>
+                    @elseif(\Auth::user()->tipo_usuario == 'Cuidador')
+                        <a class="nav-link active" href="/homeCuidador" class="dropdown-item">
+                            <i class="fas fa-id-card text-indigo"></i> Mi Cuenta
                         </a>
                     @endif
                 </li>
@@ -146,10 +177,11 @@
     <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
         <div class="container-fluid">
             <!-- Brand -->
-            @if(Auth::user()->tipo_usuario == 'Propietario')
-                <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="../home">Perfil</a>
-            @elseif(Auth::user()->tipo_usuario == 'Cuidador')
-                <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="../homeCuidador">Perfil</a>
+            @if(\Auth::user()->tipo_usuario == 'Propietario')
+                <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="{{ url('/profilePropietario/'.Auth::user()->id) }}">Perfil</a>
+
+            @elseif(\Auth::user()->tipo_usuario == 'Cuidador')
+                <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="{{ url('/profileCuidador/'.Auth::user()->id) }}">Perfil</a>
         @endif
         <!-- Form -->
             <form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
@@ -190,18 +222,32 @@
                         <div class=" dropdown-header noti-title">
                             <h6 class="text-overflow m-0">DogCare</h6>
                         </div>
-                        <a href="#" class="dropdown-item">
-                            <i class="ni ni-single-02"></i>
-                            <span>Mi perfil</span>
-                        </a>
-                        <a href="#" class="dropdown-item">
-                            <i class="fas fa-paw"></i>
-                            <span>Mascotas</span>
-                        </a>
+                        @if(\Auth::user()->tipo_usuario == 'Propietario')
+                            <a href="{{ url('/profilePropietario/'.Auth::user()->id) }}" class="dropdown-item">
+                                <i class="ni ni-single-02"></i>
+                                <span>Mi perfil</span>
+                            </a>
+                        @elseif(\Auth::user()->tipo_usuario == 'Cuidador')
+                            <a href="{{ url('/profileCuidador/'.Auth::user()->id) }}" class="dropdown-item">
+                                <i class="ni ni-single-02"></i>
+                                <span>Mi perfil</span>
+                            </a>
+                        @endif
                         <a href="#" class="dropdown-item">
                             <i class="ni ni-calendar-grid-58"></i>
-                            <span>Servicio</span>
+                            <span>Servicios</span>
                         </a>
+                        @if(\Auth::user()->tipo_usuario == 'Propietario')
+                            <a href="/home" class="dropdown-item">
+                                <i class="fas fa-id-card"></i>
+                                <span>Mi Cuenta</span>
+                            </a>
+                        @elseif(\Auth::user()->tipo_usuario == 'Cuidador')
+                            <a href="/homeCuidador" class="dropdown-item">
+                                <i class="fas fa-id-card"></i>
+                                <span>Mi Cuenta</span>
+                            </a>
+                        @endif
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{ route('logout') }}"
                            onclick="event.preventDefault();
@@ -248,8 +294,7 @@
                             </div>
                             <div class="col-lg-4 order-lg-3 text-lg-right align-self-lg-center">
                                 <div class="card-profile-actions py-4 mt-lg-0">
-                                    <a href="#" class="btn btn-sm btn-info mr-4">Connect</a>
-                                    <a href="#" class="btn btn-sm btn-default float-right">Message</a>
+                                    <a href="{{url('profilePropietario/'.$canino->user_id)}}" class="btn btn-sm btn-info mr-4">Propietario</a>
                                 </div>
                             </div>
                             <div class="col-lg-4 order-lg-1">
@@ -274,12 +319,18 @@
                                                         <div class="row">
                                                             <div class="col">
                                                                 <h5 class="card-title text-uppercase text-muted mb-0">{{__('Genero')}}</h5>
-                                                                <span class="h2 font-weight-bold mb-0">{{$canino->genero}}</span>
+                                                                    <span class="h2 font-weight-bold mb-0">{{$canino->genero}}</span>
                                                             </div>
                                                             <div class="col-auto">
-                                                                <div class="icon icon-shape bg-default text-white rounded-circle shadow">
-                                                                    <i class="fas fa-map-marked-alt"></i>
-                                                                </div>
+                                                                @if($canino->genero == 'Macho')
+                                                                    <div class="icon icon-shape bg-default text-white rounded-circle shadow">
+                                                                        <i class="fas fa-mars"></i>
+                                                                    </div>
+                                                                @elseif($canino->genero == 'Hembra')
+                                                                    <div class="icon icon-shape bg-default text-white rounded-circle shadow">
+                                                                        <i class="fas fa-venus"></i>
+                                                                    </div>
+                                                                @endif
                                                             </div>
                                                         </div>
                                                     </div>
@@ -297,7 +348,7 @@
                                                             </div>
                                                             <div class="col-auto">
                                                                 <div class="icon icon-shape bg-default text-white rounded-circle shadow">
-                                                                    <i class="fas fa-route"></i>
+                                                                    <i class="fas fa-calendar-alt"></i>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -316,7 +367,7 @@
                                                             </div>
                                                             <div class="col-auto">
                                                                 <div class="icon icon-shape bg-default text-white rounded-circle shadow">
-                                                                    <i class="fas fa-route"></i>
+                                                                    <i class="fas fa-paw"></i>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -335,7 +386,7 @@
                                                             </div>
                                                             <div class="col-auto">
                                                                 <div class="icon icon-shape bg-default text-white rounded-circle shadow">
-                                                                    <i class="fas fa-route"></i>
+                                                                    <i class="fas fa-weight"></i>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -353,8 +404,8 @@
                                                     <div class="card-body">
                                                         <div class="row">
                                                             <div class="col">
-                                                                <h5 class="card-title text-uppercase text-muted mb-0">{{__('Agresividad')}}</h5>
-                                                                <span class="h2 font-weight-bold mb-0"> {{$canino->agresivo}} </span>
+                                                                <h5 class="card-title text-uppercase text-muted mb-0">{{__('id')}}</h5>
+                                                                <span class="h2 font-weight-bold mb-0"> {{$canino->user_id}} </span>
                                                             </div>
                                                             <div class="col-auto">
                                                                 <div class="icon icon-shape bg-default text-white rounded-circle shadow">
@@ -387,36 +438,58 @@
                                                         </thead>
                                                         <tbody>
                                                         @foreach($caninos as $canino)
-                                                                <tr>
-                                                                    <th scope="row">
-                                                                        <div class="media align-items-center">
-                                                                            <a href="#" class="avatar rounded-circle mr-3">
-                                                                                @if(Storage::disk('images')->has($canino->image))
-                                                                                    <img alt="Image placeholder" src="{{ url('/image/'.$canino->image) }}">
-                                                                                @endif
-                                                                            </a>
-                                                                            <div class="media-body">
-                                                                                <span class="mb-0 text-sm">{{$canino->nombre}}</span>
-                                                                            </div>
+                                                            <tr>
+                                                                <th scope="row">
+                                                                    <div class="media align-items-center">
+                                                                        <a href="{{ url('/profileMascota/'.$canino->id) }}" class="avatar rounded-circle mr-3">
+                                                                            @if(Storage::disk('images')->has($canino->image))
+                                                                                <img alt="Image placeholder" src="{{ url('/image/'.$canino->image) }}">
+                                                                            @endif
+                                                                        </a>
+                                                                        <div class="media-body">
+                                                                            <span class="mb-0 text-sm">{{$canino->nombre}}</span>
                                                                         </div>
-                                                                    </th>
-                                                                    <td>
-                                                                        {{$canino->raza}}
-                                                                    </td>
-                                                                    <td>
-                                                                        {{$canino->nacimiento}}
-                                                                    </td>
-                                                                    <td class="text-right">
-                                                                        <div class="dropdown">
-                                                                            <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                                <i class="fas fa-ellipsis-v"></i>
-                                                                            </a>
-                                                                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                                                                <a class="dropdown-item" href="">Ver</a>
-                                                                            </div>
+                                                                    </div>
+                                                                </th>
+                                                                <td>
+                                                                    {{$canino->raza}}
+                                                                </td>
+                                                                <td>
+                                                                    {{$canino->nacimiento}}
+                                                                </td>
+                                                                <td class="text-right">
+                                                                    <div class="dropdown">
+                                                                        <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                            <i class="fas fa-ellipsis-v"></i>
+                                                                        </a>
+                                                                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                                                            <a class="dropdown-item" href="{{ url('/profileMascota/'.$canino->id) }}">Ver</a>
+                                                                            @if(Auth::check() && Auth::user()->id == $canino->user->id)
+                                                                                <a class="dropdown-item" href="{{ url('/editarCanino/'.$canino->id) }}">Editar</a>
+                                                                                <a id="#modal{{$canino->id}}" class="dropdown-item" href="{{ url( '/eliminarCanino/'.$canino->id) }}">Eliminar</a>
+                                                                                <div id="modal{{$canino->id}}" class="modal fade">
+                                                                                    <div class="modal-dialog">
+                                                                                        <div class="modal-content">
+                                                                                            <div class="modal-header">
+                                                                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                                                                <h4 class="modal-title">¿Estás seguro?</h4>
+                                                                                            </div>
+                                                                                            <div class="modal-body">
+                                                                                                <p>¿Seguro que quieres borrar este video?</p>
+                                                                                                <p class="text-warning"><small>{{$canino->nombre}}</small></p>
+                                                                                            </div>
+                                                                                            <div class="modal-footer">
+                                                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                                                                                <a href="{{ url('/eliminarCanino/'.$canino->id) }}" type="button" class="btn btn-danger">Eliminar</a>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            @endif
                                                                         </div>
-                                                                    </td>
-                                                                </tr>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
                                                         @endforeach
                                                         </tbody>
                                                     </table>

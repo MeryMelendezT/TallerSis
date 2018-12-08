@@ -18,7 +18,7 @@ class CreateEventsTable extends Migration
             $table->integer('user_id');
             $table->string('event_name');
             $table->dateTime('start_date');
-            $table->dateTime('end_date');
+            //$table->dateTime('end_date');
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');
         });

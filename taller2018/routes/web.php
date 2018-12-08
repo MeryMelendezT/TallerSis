@@ -71,16 +71,19 @@ Route::get('/imagePerfil/{filename}', array(
 
 Route::get('/profileCuidador/{user_id}', array(
     'as' => 'profileCuidador',
+    'middleware' => 'auth',
     'uses' => 'UserController@getProfileCuidador'
 ));
 
 Route::get('/profilePropietario/{user_id}', array(
     'as' => 'profilePropietario',
+    'middleware' => 'auth',
     'uses' => 'UserController@getProfilePropietario'
 ));
 
 Route::get('/profileMascota/{canino_id}', array(
     'as' => 'profileMascota',
+    'middleware' => 'auth',
     'uses' => 'CaninoController@getProfileMascota'
 ));
 
@@ -123,12 +126,6 @@ Route::get('/crearEvent/', array(
     'as' => 'crearEvent',
     'middleware' => 'auth',
     'uses' => 'EventController@createEvent'
-));
-
-Route::get('/events', array(
-    'as' => 'eventsIndex',
-    'middleware' => 'auth',
-    'uses' => 'EventController@index'
 ));
 
 Route::post('/events', array(

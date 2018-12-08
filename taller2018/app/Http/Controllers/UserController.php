@@ -190,7 +190,19 @@ class UserController extends Controller
     }
 
     public function editUserCuidador(){
-        return view('user.editCuidador');
+        $events = Event::get()->where('user_id',\Auth::user()->id);
+        $event_list = [];
+        foreach($events as $key => $event){
+            $event_list[] = Calendar::event(
+                $event->event_name,
+                true,
+                new \DateTime($event->start_date),
+                new \DateTime($event->start_date.' +1 day')
+            );
+        }
+        $calendar_details = Calendar::addEvents($event_list);
+
+        return view('user.editCuidador', compact('calendar_details'));
     }
 
     public function editUserPropietario(){
