@@ -14,12 +14,12 @@ class CreateAgregarForeanasServiciosTable extends Migration
     public function up()
     {
         Schema::table('servicios', function ($table) {
-            $table->foreign('reembolso_id')->references('id')->on('reembolsos');
-            $table->foreign('factura_id')->references('id')->on('facturas');
-            $table->foreign('usuario_id')->references('id')->on('users');
-            $table->foreign('usuario_id_1')->references('id')->on('users');
-            $table->foreign('billetera_id')->references('id')->on('billeteras');
-            $table->foreign('billetera_id_1')->references('id')->on('billeteras');
+            //$table->foreign('reembolso_id')->references('id')->on('reembolsos');
+            //$table->foreign('factura_id')->references('id')->on('facturas');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id_1')->references('id')->on('users');
+            //$table->foreign('billetera_id')->references('id')->on('billeteras');
+            //$table->foreign('billetera_id_1')->references('id')->on('billeteras');
         });
     }
 

@@ -133,3 +133,9 @@ Route::post('/events', array(
     'middleware' => 'auth',
     'uses' => 'EventController@addEvent'
 ));
+
+Route::get('/crearServicio/{user_id}',array(
+    'as' => 'createServicio',
+    'middleware' => 'auth',
+    'uses' => 'ServicioController@createServicio'
+));

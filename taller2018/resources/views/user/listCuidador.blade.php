@@ -332,7 +332,7 @@
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
                                             <a class="dropdown-item" href="{{ route('profileCuidador', ['user_id' => $user->id]) }}">Ver</a>
-                                            <a class="dropdown-item" href="#">Another action</a>
+                                            <a class="dropdown-item" href="{{ route('createServicio', ['user_id' => $user->id]) }}">Solicitar Servicio</a>
                                             <a class="dropdown-item" href="#">Something else here</a>
                                         </div>
                                     </div>
