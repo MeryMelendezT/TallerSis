@@ -84,6 +84,10 @@ class ComposerStaticInitebd65243b3effae1e3b436e70c4e6687
         array (
             'Illuminate\\' => 11,
         ),
+        'G' => 
+        array (
+            'GeneaLabs\\LaravelMaps\\' => 22,
+        ),
         'F' => 
         array (
             'Fideloper\\Proxy\\' => 16,
@@ -241,6 +245,10 @@ class ComposerStaticInitebd65243b3effae1e3b436e70c4e6687
         array (
             0 => __DIR__ . '/..' . '/laravel/framework/src/Illuminate',
         ),
+        'GeneaLabs\\LaravelMaps\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/genealabs/laravel-maps/src',
+        ),
         'Fideloper\\Proxy\\' => 
         array (
             0 => __DIR__ . '/..' . '/fideloper/proxy/src',
@@ -333,7 +341,6 @@ class ComposerStaticInitebd65243b3effae1e3b436e70c4e6687
     public static $classMap = array (
         'App\\Canino' => __DIR__ . '/../..' . '/app/Canino.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
-        'App\\Disponibles' => __DIR__ . '/../..' . '/app/Disponibles.php',
         'App\\Event' => __DIR__ . '/../..' . '/app/Event.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Helpers\\FormatTime' => __DIR__ . '/../..' . '/app/Helpers/FormatTime.php',
@@ -346,6 +353,7 @@ class ComposerStaticInitebd65243b3effae1e3b436e70c4e6687
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\EventController' => __DIR__ . '/../..' . '/app/Http/Controllers/EventController.php',
         'App\\Http\\Controllers\\HomeController' => __DIR__ . '/../..' . '/app/Http/Controllers/HomeController.php',
+        'App\\Http\\Controllers\\ServicioController' => __DIR__ . '/../..' . '/app/Http/Controllers/ServicioController.php',
         'App\\Http\\Controllers\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/UserController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',
@@ -361,6 +369,7 @@ class ComposerStaticInitebd65243b3effae1e3b436e70c4e6687
         'App\\Providers\\EventServiceProvider' => __DIR__ . '/../..' . '/app/Providers/EventServiceProvider.php',
         'App\\Providers\\FormatTimeServiceProvider' => __DIR__ . '/../..' . '/app/Providers/FormatTimeServiceProvider.php',
         'App\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/app/Providers/RouteServiceProvider.php',
+        'App\\Servicio' => __DIR__ . '/../..' . '/app/Servicio.php',
         'App\\User' => __DIR__ . '/../..' . '/app/User.php',
         'BeyondCode\\DumpServer\\DumpServerCommand' => __DIR__ . '/..' . '/beyondcode/laravel-dump-server/src/DumpServerCommand.php',
         'BeyondCode\\DumpServer\\DumpServerServiceProvider' => __DIR__ . '/..' . '/beyondcode/laravel-dump-server/src/DumpServerServiceProvider.php',
@@ -929,6 +938,9 @@ class ComposerStaticInitebd65243b3effae1e3b436e70c4e6687
         'Faker\\ValidGenerator' => __DIR__ . '/..' . '/fzaninotto/faker/src/Faker/ValidGenerator.php',
         'Fideloper\\Proxy\\TrustProxies' => __DIR__ . '/..' . '/fideloper/proxy/src/TrustProxies.php',
         'Fideloper\\Proxy\\TrustedProxyServiceProvider' => __DIR__ . '/..' . '/fideloper/proxy/src/TrustedProxyServiceProvider.php',
+        'GeneaLabs\\LaravelMaps\\Facades\\Map' => __DIR__ . '/..' . '/genealabs/laravel-maps/src/Facades/Map.php',
+        'GeneaLabs\\LaravelMaps\\Map' => __DIR__ . '/..' . '/genealabs/laravel-maps/src/Map.php',
+        'GeneaLabs\\LaravelMaps\\Providers\\Service' => __DIR__ . '/..' . '/genealabs/laravel-maps/src/Providers/Service.php',
         'Hamcrest\\Arrays\\IsArray' => __DIR__ . '/..' . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Arrays/IsArray.php',
         'Hamcrest\\Arrays\\IsArrayContaining' => __DIR__ . '/..' . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Arrays/IsArrayContaining.php',
         'Hamcrest\\Arrays\\IsArrayContainingInAnyOrder' => __DIR__ . '/..' . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Arrays/IsArrayContainingInAnyOrder.php',

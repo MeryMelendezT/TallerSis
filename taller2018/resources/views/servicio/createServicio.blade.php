@@ -17,8 +17,12 @@
     <!-- Argon CSS -->
     <link type="text/css" href="../assets/css/argon.css?v=1.0.0" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.2.7/fullcalendar.min.css"/>
-    <link type="text/css" href="./assets2/css/docs.min.css" rel="stylesheet">
-
+    <style type="text/css">
+        #map {
+            width: 100%;
+            height: 400px;
+        }
+    </style>
 </head>
 
 <body>
@@ -288,7 +292,7 @@
                         <div class="row justify-content-center">
                             <div class="col-lg-3 order-lg-2">
                                 <div class="card-profile-image">
-                                    <a href="#">
+                                    <a href="{{ url('/profileCuidador/'.$user->id) }}">
                                         <img src="{{ url('/imagePerfil/'.$user->image) }}" class="rounded-circle">
                                     </a>
                                 </div>
@@ -414,30 +418,20 @@
                                         @endif
                                         <div class="col-lg-12">
                                             <!-- Tabs with icons -->
-                                            <div class="nav-wrapper">
-                                                <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="tabs-icons-text" role="tablist">
-                                                    <li class="nav-item">
-                                                        <a class="nav-link mb-sm-3 mb-md-0 active" id="tabs-icons-text-1-tab" data-toggle="tab" href="#tabs-icons-text-1" role="tab" aria-controls="tabs-icons-text-1" aria-selected="true"><i class="fas fa-walking"></i> Paseo</a>
-                                                    </li>
-                                                    <li class="nav-item">
-                                                        <a class="nav-link mb-sm-3 mb-md-0" id="tabs-icons-text-2-tab" data-toggle="tab" href="#tabs-icons-text-2" role="tab" aria-controls="tabs-icons-text-2" aria-selected="false"><i class="fas fa-building"></i> Alojamiento</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
                                             <div class="card shadow">
                                                 <div class="card-body">
                                                     <div class="tab-content" id="myTabContent">
                                                         <div class="tab-pane fade show active" role="tabpanel" id="tabs-icons-text-1" aria-labelledby="tabs-icons-text-1-tab">
                                                             <div class="card-body">
-                                                                <form method="POST" action="{{ route('savePropietario') }}" enctype="multipart/form-data">
+                                                                <form method="POST" action="{{ route('saveServicio') }}">
                                                                     @csrf
-                                                                    <h4 class="text-muted mb-4">Perfil Propietario</h4>
+                                                                    <h4 class="text-muted mb-4">Solicitar Servicio</h4>
                                                                     <div class="pl-lg-4">
                                                                         <div class="row">
-                                                                            <div class="col-lg-4">
+                                                                            <div class="col-lg-6">
                                                                                 <div class="form-group">
                                                                                     <label class="form-control-label" for="user_id">{{ __('Propietario') }}</label>
-                                                                                    <input type="text" id="user_id" class="form-control{{ $errors->has('user_id') ? ' is-invalid' : '' }}" name="user_id" value="{{ Auth::user()->id }}" placeholder="Propietario" pattern="[0-9 ]+" required autofocus disabled>
+                                                                                    <input type="text" id="user_id" class="form-control{{ $errors->has('user_id') ? ' is-invalid' : '' }}" name="user_id" value="{{ Auth::user()->id }}" placeholder="Propietario" pattern="[0-9 ]+" autofocus disabled>
                                                                                     @if ($errors->has('user_id'))
                                                                                         <span class="invalid-feedback" role="alert">
                                                                                             <strong>{{ $errors->first('user_id') }}</strong>
@@ -445,10 +439,10 @@
                                                                                     @endif
                                                                                 </div>
                                                                             </div>
-                                                                            <div class="col-lg-4">
+                                                                            <div class="col-lg-6">
                                                                                 <div class="form-group">
                                                                                     <label class="form-control-label" for="user_id_1">{{ __('Cuidador') }}</label>
-                                                                                    <input type="text" id="user_id_1" class="form-control{{ $errors->has('user_id_1') ? ' is-invalid' : '' }}" name="user_id_1" value="{{ $user->id}}" pattern="[0-9 ]+" placeholder="Cuidador" required disabled>
+                                                                                    <input type="text" id="user_id_1" class="form-control{{ $errors->has('user_id_1') ? ' is-invalid' : '' }}" name="user_id_1" value="{{$user->id}}" pattern="[0-9 ]+" placeholder="Cuidador" required>
                                                                                     @if ($errors->has('user_id_1'))
                                                                                         <span class="invalid-feedback" role="alert">
                                                                                             <strong>{{ $errors->first('user_id_1') }}</strong>
@@ -456,34 +450,15 @@
                                                                                     @endif
                                                                                 </div>
                                                                             </div>
-                                                                            <div class="col-lg-4">
-                                                                                <div class="form-group">
-                                                                                    <label class="form-control-label" for="tipo_servicio">{{ __('Tipo de Servicio') }}</label>
-                                                                                    <input type="text" id="tipo_servicio" class="form-control{{ $errors->has('tipo_servicio') ? ' is-invalid' : '' }}" name="tipo_servicio" value="Paseo" pattern="[a-zA-Z ]+" placeholder="Paseo" required disabled>
-                                                                                    @if ($errors->has('tipo_servicio'))
-                                                                                        <span class="invalid-feedback" role="alert">
-                                                                                            <strong>{{ $errors->first('tipo_servicio') }}</strong>
-                                                                                        </span>
-                                                                                    @endif
-                                                                                </div>
-                                                                            </div>
                                                                         </div>
                                                                         <div class="row">
-                                                                            <div class="col-lg-6">
+                                                                            <div class="col-lg-12">
                                                                                 <div class="form-group">
-                                                                                    <label class="form-control-label" for="precio">{{ __('Precio de Paseo Bs (Por hora).') }}</label>
-                                                                                    <input type="text" id="precio" class="form-control{{ $errors->has('precio') ? ' is-invalid' : '' }}" name="precio" value="{{ $user->precio_paseo }}" placeholder="precio" required disabled>
-                                                                                    @if ($errors->has('precio'))
-                                                                                        <span class="invalid-feedback" role="alert">
-                                                                                            <strong>{{ $errors->first('precio') }}</strong>
-                                                                                        </span>
-                                                                                    @endif
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col-lg-6">
-                                                                                <div class="form-group">
-                                                                                    <label class="form-control-label" for="tipo_servicio">Tipo de Servicio</label>
-                                                                                    <input type="text" id="tipo_servicio" class="form-control form-control-alternative" value="Paseo" disabled>
+                                                                                    <label class="form-control-label" for="tipo_servicio">{{ __('Tipo de Servicio') }}</label>
+                                                                                    <select name="tipo_servicio" id="tipo_servicio" class="form-control{{ $errors->has('tipo_servicio') }}">
+                                                                                        <option value="Paseo">Paseo</option>
+                                                                                        <option value="Alojamiento">Alojamiento</option>
+                                                                                    </select>
                                                                                 </div>
                                                                             </div>
                                                                             <div class="col-lg-12">
@@ -517,138 +492,36 @@
                                                                         </div>
                                                                         <hr class="my-4" />
                                                                         <h6 class="heading-small text-muted mb-4">Direccion</h6>
-
-
-                                                                    </div>
-                                                                    <div class="form-group row mb-0">
-                                                                        <div class="col-md-12 offset-md-5">
-                                                                            <button type="submit" class="btn btn-primary">
-                                                                                {{ __('Registrarse') }}
-                                                                            </button>
-                                                                        </div>
-                                                                    </div>
-                                                                </form>
-                                                            </div>
-                                                        </div>
-                                                        <div class="tab-pane fade" role="tabpanel" id="tabs-icons-text-2" aria-labelledby="tabs-icons-text-2-tab">
-                                                            <div class="card-body">
-                                                                <form method="POST" action="{{ route('savePropietario') }}" enctype="multipart/form-data">
-                                                                    @csrf
-                                                                    <h4 class="text-muted mb-4">Perfil Propietario</h4>
-                                                                    <div class="pl-lg-4">
-                                                                        <div class="row">
-                                                                            <div class="col-lg-4">
-                                                                                <div class="form-group">
-                                                                                    <label class="form-control-label" for="user_id">{{ __('Propietario') }}</label>
-                                                                                    <input type="text" id="user_id" class="form-control{{ $errors->has('user_id') ? ' is-invalid' : '' }}" name="user_id" value="{{ Auth::user()->id }}" placeholder="Propietario" pattern="[0-9 ]+" required autofocus disabled>
-                                                                                    @if ($errors->has('user_id'))
-                                                                                        <span class="invalid-feedback" role="alert">
-                                                                                            <strong>{{ $errors->first('user_id') }}</strong>
-                                                                                        </span>
-                                                                                    @endif
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col-lg-4">
-                                                                                <div class="form-group">
-                                                                                    <label class="form-control-label" for="user_id_1">{{ __('Cuidador') }}</label>
-                                                                                    <input type="text" id="user_id_1" class="form-control{{ $errors->has('user_id_1') ? ' is-invalid' : '' }}" name="user_id_1" value="{{ $user->id}}" pattern="[0-9 ]+" placeholder="Cuidador" required disabled>
-                                                                                    @if ($errors->has('user_id_1'))
-                                                                                        <span class="invalid-feedback" role="alert">
-                                                                                            <strong>{{ $errors->first('user_id_1') }}</strong>
-                                                                                        </span>
-                                                                                    @endif
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col-lg-4">
-                                                                                <div class="form-group">
-                                                                                    <label class="form-control-label" for="tipo_servicio">{{ __('Tipo de Servicio') }}</label>
-                                                                                    <input type="text" id="tipo_servicio" class="form-control{{ $errors->has('tipo_servicio') ? ' is-invalid' : '' }}" name="tipo_servicio" value="Paseo" pattern="[a-zA-Z ]+" placeholder="Paseo" required disabled>
-                                                                                    @if ($errors->has('tipo_servicio'))
-                                                                                        <span class="invalid-feedback" role="alert">
-                                                                                            <strong>{{ $errors->first('tipo_servicio') }}</strong>
-                                                                                        </span>
-                                                                                    @endif
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
+                                                                        <div id="map" class="map-canvas"></div>
                                                                         <div class="row">
                                                                             <div class="col-lg-6">
                                                                                 <div class="form-group">
-                                                                                    <label class="form-control-label" for="precio">{{ __('Precio de Paseo Bs.') }}</label>
-                                                                                    <input type="text" id="precio" class="form-control{{ $errors->has('precio') ? ' is-invalid' : '' }}" name="precio" value="{{ $user->precio_paseo }}" placeholder="precio" required disabled>
-                                                                                    @if ($errors->has('precio'))
+                                                                                    <label class="form-control-label" for="lat-span">{{ __('Latitud') }}</label>
+                                                                                    <input type="text" id="lat-span" class="form-control{{ $errors->has('lat-span') ? ' is-invalid' : '' }}" name="lat-span" placeholder="Latitud" required>
+                                                                                    @if ($errors->has('lat-span'))
                                                                                         <span class="invalid-feedback" role="alert">
-                                                                                            <strong>{{ $errors->first('precio') }}</strong>
+                                                                                            <strong>{{ $errors->first('lat-span') }}</strong>
                                                                                         </span>
                                                                                     @endif
                                                                                 </div>
                                                                             </div>
                                                                             <div class="col-lg-6">
                                                                                 <div class="form-group">
-                                                                                    <label class="form-control-label" for="tipo_servicio">Tipo de Servicio</label>
-                                                                                    <input type="text" id="tipo_servicio" class="form-control form-control-alternative" value="Paseo" disabled>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col-lg-12">
-                                                                                <div class="form-group">
-                                                                                    <div class="input-datetimerange datepicker row align-items-center">
-                                                                                        <div class="col">
-                                                                                            <div class="form-group">
-                                                                                                <label class="form-control-label" for="fecha_inicio">{{ __('Inicio de servicio') }}</label>
-                                                                                                <div class="input-group">
-                                                                                                    <div class="input-group-prepend">
-                                                                                                        <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
-                                                                                                    </div>
-                                                                                                    <input class="form-control" placeholder="Fecha de Inicio" type="datetime-local" id="fecha_inicio" name="fecha_inicio">
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="col">
-                                                                                            <div class="form-group">
-                                                                                                <label class="form-control-label" for="fecha_fin">{{ __('Final de servicio') }}</label>
-                                                                                                <div class="input-group">
-                                                                                                    <div class="input-group-prepend">
-                                                                                                        <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
-                                                                                                    </div>
-                                                                                                    <input class="form-control" placeholder="Fecha de final" type="datetime-local" id="fecha_fin" name="fecha_fin">
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col-lg-6">
-                                                                                <div class="form-group">
-                                                                                    <label class="form-control-label" for="precio_empresa">{{ __('Precio de Impuestos y otros Bs.') }}</label>
-                                                                                    <input type="text" id="precio_empresa" class="form-control{{ $errors->has('precio_empresa') ? ' is-invalid' : '' }}" name="precio_empresa" value="{{ ($user->precio_paseo)*0.26 }}" placeholder="Precio impuestos y otros" required disabled>
-                                                                                    @if ($errors->has('precio_empresa'))
+                                                                                    <label class="form-control-label" for="lon-span">{{ __('Longitud') }}</label>
+                                                                                    <input type="text" id="lon-span" class="form-control{{ $errors->has('lon-span') ? ' is-invalid' : '' }}" name="lon-span" placeholder="Longitud" required>
+                                                                                    @if ($errors->has('lon-span'))
                                                                                         <span class="invalid-feedback" role="alert">
-                                                                                            <strong>{{ $errors->first('precio_empresa') }}</strong>
-                                                                                        </span>
-                                                                                    @endif
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col-lg-6">
-                                                                                <div class="form-group">
-                                                                                    <label class="form-control-label" for="precio_total">{{ __('Precio Total a Pagar Bs.') }}</label>
-                                                                                    <input type="text" id="precio_total" class="form-control{{ $errors->has('precio_total') ? ' is-invalid' : '' }}" name="precio_total" value="{{ $user->precio_paseo+($user->precio_paseo)*0.26 }}" placeholder="Precio total" required disabled>
-                                                                                    @if ($errors->has('precio_empresa'))
-                                                                                        <span class="invalid-feedback" role="alert">
-                                                                                            <strong>{{ $errors->first('precio_empresa') }}</strong>
+                                                                                            <strong>{{ $errors->first('lon-span') }}</strong>
                                                                                         </span>
                                                                                     @endif
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                        <hr class="my-4" />
-                                                                        <h6 class="heading-small text-muted mb-4">Direccion</h6>
-
-
                                                                     </div>
-                                                                    <div class="form-group row mb-0">
-                                                                        <div class="col-md-12 offset-md-5">
+                                                                    <div class="form-group row mb-0" >
+                                                                        <div class="col-md-12" align="center">
                                                                             <button type="submit" class="btn btn-primary">
-                                                                                {{ __('Registrarse') }}
+                                                                                {{ __('Solicitar') }}
                                                                             </button>
                                                                         </div>
                                                                     </div>
@@ -702,24 +575,40 @@
 <script src="../assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="../assets2/vendor/bootstrap/bootstrap.min.js"></script>
 
-<script src="./assets2/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
 <!-- Argon JS -->
-<script src="../assets/js/argon.js?v=1.0.0"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.2.7/fullcalendar.min.js"></script>
 {!! $calendar_details->script() !!}
 
-<script type="text/javascript">
 
-    $('.date').datepicker({
-        format: 'yyyy-mm-dd HH:mm',
-        language: 'es',
-        autoclose: true
+<script>
+    function initMap() {
+        var myLatLng = {lat: -16.522598227254278, lng: -68.11194864364865};
 
-    });
+        var map = new google.maps.Map(document.getElementById('map'), {
+            center: myLatLng,
+            zoom: 17
+        });
+
+        var marker = new google.maps.Marker({
+            position: myLatLng,
+            map: map,
+            title: 'Lugar de Encuentro',
+            draggable: true
+        });
+
+        google.maps.event.addListener(marker, 'dragend', function(marker) {
+            var latLng = marker.latLng;
+            var latitud = document.getElementById('lat-span');
+            latitud.value = latLng.lat();
+            var longitud = document.getElementById('lon-span');
+            longitud.value = latLng.lng();
+        });
+    }
 
 </script>
 
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCx_BcTSU7V5eh1e3KA0WAC-jOZLzSyppQ&libraries=places&callback=initMap" async defer></script>
 
 
 </body>

@@ -139,3 +139,10 @@ Route::get('/crearServicio/{user_id}',array(
     'middleware' => 'auth',
     'uses' => 'ServicioController@createServicio'
 ));
+
+Route::post('/registerServicio', array(
+    'as' => 'saveServicio',
+    'middleware' => 'auth',
+    'uses' => 'ServicioController@saveServicio'
+));
+
