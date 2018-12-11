@@ -73,10 +73,17 @@
                             <span>Mi perfil</span>
                         </a>
                     @endif
-                    <a href="#" class="dropdown-item">
-                        <i class="ni ni-calendar-grid-58"></i>
-                        <span>Servicios</span>
-                    </a>
+                    @if(\Auth::user()->tipo_usuario == 'Propietario')
+                        <a href="/servicio" class="dropdown-item">
+                            <i class="ni ni-calendar-grid-58"></i>
+                            <span>Servicios</span>
+                        </a>
+                    @elseif(\Auth::user()->tipo_usuario == 'Cuidador')
+                        <a href="/servicioCuidador" class="dropdown-item">
+                            <i class="ni ni-calendar-grid-58"></i>
+                            <span>Servicios</span>
+                        </a>
+                    @endif
                     @if(\Auth::user()->tipo_usuario == 'Propietario')
                         <a href="/home" class="dropdown-item">
                             <i class="fas fa-id-card"></i>
@@ -157,6 +164,19 @@
                 </li>
                 <li class="nav-item">
                     @if(\Auth::user()->tipo_usuario == 'Propietario')
+                        <a href="/servicio" class="nav-link">
+                            <i class="fas fa-list-alt text-teal"></i>
+                            <span>Servicios</span>
+                        </a>
+                    @elseif(\Auth::user()->tipo_usuario == 'Cuidador')
+                        <a href="/servicioCuidador" class="nav-link">
+                            <i class="fas fa-list-alt text-teal"></i>
+                            <span>Servicios</span>
+                        </a>
+                    @endif
+                </li>
+                <li class="nav-item">
+                    @if(\Auth::user()->tipo_usuario == 'Propietario')
                         <a class="nav-link active" href="/home" class="dropdown-item">
                             <i class="fas fa-id-card text-indigo"></i> Mi Cuenta
                         </a>
@@ -232,10 +252,17 @@
                                 <span>Mi perfil</span>
                             </a>
                         @endif
-                        <a href="#" class="dropdown-item">
-                            <i class="ni ni-calendar-grid-58"></i>
-                            <span>Servicios</span>
-                        </a>
+                        @if(\Auth::user()->tipo_usuario == 'Propietario')
+                            <a href="/servicio" class="dropdown-item">
+                                <i class="ni ni-calendar-grid-58"></i>
+                                <span>Servicios</span>
+                            </a>
+                        @elseif(\Auth::user()->tipo_usuario == 'Cuidador')
+                            <a href="/servicioCuidador" class="dropdown-item">
+                                <i class="ni ni-calendar-grid-58"></i>
+                                <span>Servicios</span>
+                            </a>
+                        @endif
                         @if(\Auth::user()->tipo_usuario == 'Propietario')
                             <a href="/home" class="dropdown-item">
                                 <i class="fas fa-id-card"></i>
@@ -839,7 +866,8 @@
                     <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
                         <div class="d-flex justify-content-between">
                             <h3 class="mb-0">DISPONIBILIDAD</h3>
-                            <a href="crearEvent" class="btn btn-sm btn-default float-right">Editar</a>
+                            <a href="/crearEvent" class="btn btn-sm btn-info mr-4">Agregar</a>
+                            <a href="/listEvent" class="btn btn-sm btn-default float-right">Listado</a>
                         </div>
                     </div>
                     <div class="card-body pt-0 pt-md-4">

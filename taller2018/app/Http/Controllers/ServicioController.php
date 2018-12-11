@@ -34,8 +34,11 @@ class ServicioController extends Controller
         }
         $calendar_details = Calendar::addEvents($event_list);
 
+        $caninos = Canino::orderBy('nacimiento','desc')->get();
+
         return view('servicio.createServicio', compact('calendar_details') , array(
-            'user' => $user
+            'user' => $user,
+            'caninos' => $caninos
         ));
     }
 
@@ -50,6 +53,7 @@ class ServicioController extends Controller
         $servicio = new Servicio();
         $servicio->user_id = \Auth::user()->id;
         $servicio->user_id_1 = $request->input('user_id_1');
+        $servicio->canino_id = $request->input('canino_id');
         $user = User::find($servicio->user_id_1);
         $servicio->tipo_servicio = $request->input('tipo_servicio');
         if($servicio->tipo_servicio == 'Paseo'){
@@ -109,4 +113,63 @@ class ServicioController extends Controller
         return redirect()->route('home')->with(array('message'=>'El registro fue exitoso'));
     }
 
+    public function listServicio(){
+        $servicios = Servicio::where('user_id', \Auth::user()->id)->paginate('10');
+        $user = User::get();
+        return view('servicio.listServicio', array(
+            'servicios' => $servicios,
+            'user' => $user
+        ));
+    }
+
+    public function getProfileServicio($servicio_id){
+        $servicio = Servicio::find($servicio_id);
+        $user = User::find($servicio->user_id_1);
+        $canino = Canino::find($servicio->canino_id);
+
+        return view('servicio.profileServicio', array(
+            'servicio' => $servicio,
+            'user' => $user,
+            'canino' => $canino
+        ));
+    }
+
+    public function listServicioCuidador(){
+        $servicios = Servicio::where('user_id_1', \Auth::user()->id)->orderBy('fecha_inicio','asc')->paginate('10');
+        $user = User::get();
+        return view('servicio.listServicioCuidador', array(
+            'servicios' => $servicios,
+            'user' => $user
+        ));
+    }
+
+    public function getAceptar($servicio_id){
+        $user = \Auth::user();
+        $servicio = Servicio::find($servicio_id);
+        if($user && $servicio->user_id_1 == $user->id){
+            $servicio->estado = 'Aceptado';
+            $servicio->update();
+            $message = array('message' => 'Servicio aceptado');
+            return redirect()->route('homeCuidador')->with($message);
+
+        }else{
+            $message = array('message' => 'Servicio no aceptado');
+            return back()->with($message);
+        }
+    }
+
+    public function getRechazar($servicio_id){
+        $user = \Auth::user();
+        $servicio = Servicio::find($servicio_id);
+        if($user && $servicio->user_id_1 == $user->id){
+            $servicio->estado = 'Rechazado';
+            $servicio->update();
+            $message = array('message' => 'Servicio aceptado');
+            return redirect()->route('homeCuidador')->with($message);
+
+        }else{
+            $message = array('message' => 'Servicio no aceptado');
+            return back()->with($message);
+        }
+    }
 }

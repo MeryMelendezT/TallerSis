@@ -79,10 +79,17 @@
                             <span>Mi perfil</span>
                         </a>
                     @endif
-                    <a href="#" class="dropdown-item">
-                        <i class="ni ni-calendar-grid-58"></i>
-                        <span>Servicios</span>
-                    </a>
+                    @if(\Auth::user()->tipo_usuario == 'Propietario')
+                        <a href="/servicio" class="dropdown-item">
+                            <i class="ni ni-calendar-grid-58"></i>
+                            <span>Servicios</span>
+                        </a>
+                    @elseif(\Auth::user()->tipo_usuario == 'Cuidador')
+                        <a href="/servicioCuidador" class="dropdown-item">
+                            <i class="ni ni-calendar-grid-58"></i>
+                            <span>Servicios</span>
+                        </a>
+                    @endif
                     @if(\Auth::user()->tipo_usuario == 'Propietario')
                         <a href="/home" class="dropdown-item">
                             <i class="fas fa-id-card"></i>
@@ -152,12 +159,25 @@
                 </li>
                 <li class="nav-item">
                     @if(\Auth::user()->tipo_usuario == 'Propietario')
-                        <a class="nav-link active" href="{{ url('/profilePropietario/'.Auth::user()->id) }}" class="dropdown-item">
+                        <a class="nav-link" href="{{ url('/profilePropietario/'.Auth::user()->id) }}" class="dropdown-item">
                             <i class="ni ni-single-02 text-blue"></i> Perfil
                         </a>
                     @elseif(\Auth::user()->tipo_usuario == 'Cuidador')
-                        <a class="nav-link active" href="{{ url('/profileCuidador/'.Auth::user()->id) }}" class="dropdown-item">
+                        <a class="nav-link" href="{{ url('/profileCuidador/'.Auth::user()->id) }}" class="dropdown-item">
                             <i class="ni ni-single-02 text-blue"></i> Perfil
+                        </a>
+                    @endif
+                </li>
+                <li class="nav-item">
+                    @if(\Auth::user()->tipo_usuario == 'Propietario')
+                        <a href="/servicio" class="nav-link active">
+                            <i class="fas fa-list-alt text-teal"></i>
+                            <span>Servicios</span>
+                        </a>
+                    @elseif(\Auth::user()->tipo_usuario == 'Cuidador')
+                        <a href="/servicioCuidador" class="nav-link active">
+                            <i class="fas fa-list-alt text-teal"></i>
+                            <span>Servicios</span>
                         </a>
                     @endif
                 </li>
@@ -329,7 +349,7 @@
                             <h3>{{$user->name}}
                                 <span class="font-weight-light">, {{ Carbon::parse($user->nacimiento)->age }}</span>
                             </h3>
-                            <div class="h4 font-weight-300"><i class="ni location_pin mr-2"></i>{{ $user->departamento }}, {{ $user->zona }}</div>
+                            <div class="h4 font-weight-300"><i class="ni location_pin mr-2"></i>{{ $user->departamento }}, {{ $user->zona }} </div>
                             <div><i class="ni education_hat mr-2"></i>{{ $user->descripcion }}</div>
                         </div>
                         <div class="mt-5 py-5 border-top text-center">
@@ -463,6 +483,22 @@
                                                                             </div>
                                                                             <div class="col-lg-12">
                                                                                 <div class="form-group">
+                                                                                    <label class="form-control-label" for="canino_id">{{ __('Mascota') }}</label>
+                                                                                    <select name="canino_id" id="canino_id" class="form-control{{ $errors->has('canino_id') }}">
+                                                                                    @if($caninos->count() > 0)
+                                                                                        @foreach($caninos as $canino)
+                                                                                            @if(Auth::check() && Auth::user()->id == $canino->user->id)
+                                                                                                <option value="{{$canino->id}}">{{$canino->nombre}}</option>
+                                                                                            @endif
+                                                                                        @endforeach
+                                                                                    @else
+                                                                                            <option disabled>Debes registrar tus mascotas</option>
+                                                                                    @endif
+                                                                                    </select>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-lg-12">
+                                                                                <div class="form-group">
                                                                                     <div class="input-datetimerange datepicker row align-items-center">
                                                                                         <div class="col">
                                                                                             <div class="form-group">
@@ -583,7 +619,7 @@
 
 <script>
     function initMap() {
-        var myLatLng = {lat: -16.522598227254278, lng: -68.11194864364865};
+        var myLatLng = {lat: $servicio->punto_encuentro_latitud, lng: $servicio->punto_encuentro_longitud};
 
         var map = new google.maps.Map(document.getElementById('map'), {
             center: myLatLng,

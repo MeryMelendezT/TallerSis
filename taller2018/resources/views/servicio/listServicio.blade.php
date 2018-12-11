@@ -146,7 +146,7 @@
             <!-- Navigation -->
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link active" href="../cuidador">
+                    <a class="nav-link" href="../cuidador">
                         <i class="ni ni-pin-3 text-purple"></i> Cuidador
                     </a>
                 </li>
@@ -163,12 +163,12 @@
                 </li>
                 <li class="nav-item">
                     @if(\Auth::user()->tipo_usuario == 'Propietario')
-                        <a href="/servicio" class="nav-link">
+                        <a href="/servicio" class="nav-link active">
                             <i class="fas fa-list-alt text-teal"></i>
                             <span>Servicios</span>
                         </a>
                     @elseif(\Auth::user()->tipo_usuario == 'Cuidador')
-                        <a href="/servicioCuidador" class="nav-link">
+                        <a href="/servicioCuidador" class="nav-link active">
                             <i class="fas fa-list-alt text-teal"></i>
                             <span>Servicios</span>
                         </a>
@@ -251,17 +251,10 @@
                                 <span>Mi perfil</span>
                             </a>
                         @endif
-                        @if(\Auth::user()->tipo_usuario == 'Propietario')
-                            <a href="/servicio" class="dropdown-item">
-                                <i class="ni ni-calendar-grid-58"></i>
-                                <span>Servicios</span>
-                            </a>
-                        @elseif(\Auth::user()->tipo_usuario == 'Cuidador')
-                            <a href="/servicioCuidador" class="dropdown-item">
-                                <i class="ni ni-calendar-grid-58"></i>
-                                <span>Servicios</span>
-                            </a>
-                        @endif
+                        <a href="#" class="dropdown-item">
+                            <i class="ni ni-calendar-grid-58"></i>
+                            <span>Servicios</span>
+                        </a>
                         @if(\Auth::user()->tipo_usuario == 'Propietario')
                             <a href="/home" class="dropdown-item">
                                 <i class="fas fa-id-card"></i>
@@ -297,7 +290,7 @@
         <div class="container-fluid d-flex align-items-center">
             <div class="row">
                 <div class="col-lg-7 col-md-10">
-                    <h1 class="display-2 text-white">Cuidadores</h1>
+                    <h1 class="display-2 text-white">Mis Servicios</h1>
                     <p class="text-white mt-0 mb-5"></p>
                 </div>
             </div>
@@ -309,74 +302,69 @@
             <div class="col">
                 <div class="card shadow">
                     <div class="card-header border-0">
-                        <h3 class="mb-0">Cuidadores</h3>
+                        <h3 class="mb-0">Servicios</h3>
                     </div>
                     <div class="table-responsive">
                         <table class="table align-items-center table-flush">
                             <thead class="thead-light">
                             <tr>
-                                <th scope="col">Nombre Completo</th>
-                                <th scope="col">Descripcion</th>
-                                <th scope="col">Alojamiento</th>
-                                <th scope="col">Paseo</th>
+                                <th scope="col">Mascota</th>
+                                <th scope="col">Tipo de Servicio</th>
+                                <th scope="col">Fecha</th>
+                                <th scope="col">Precio</th>
+                                <th scope="col">Estado</th>
                                 <th scope="col"></th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($users as $user)
-                            <tr>
-                                <th scope="row">
-                                    <div class="media align-items-center">
-                                        <a href="#" class="avatar rounded-circle mr-3">
-                                            <img src="{{ url('/imagePerfil/'.$user->image) }}" class="rounded-circle">
-                                        </a>
-                                        <div class="media-body">
-                                            <span class="mb-0 text-sm">{{$user->name}} {{$user->apellido}}</span>
+                            @foreach($servicios as $servicio)
+                                <tr>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            <a href="#" class="avatar rounded-circle mr-3">
+                                                <img src="{{ url('/image/'.$servicio->canino->image) }}" class="rounded-circle">
+                                            </a>
+                                            <div class="media-body">
+                                                <span class="mb-0 text-sm">{{$servicio->canino->nombre}}</span>
+                                            </div>
                                         </div>
-                                    </div>
-                                </th>
-                                <td>
-                                    {{$user->descripcion}}
-                                </td>
-                                <td>
-                                    <span class="badge badge-dot mr-4">
-                                        @if($user->alojamiento == 'Si')
-                                            Bs. {{$user->precio_alojamiento}}
-                                        @endif
-                                    </span>
-                                </td>
-                                <td>
-                                    <span class="badge badge-dot mr-4">
-                                        @if($user->paseo == 'Si')
-                                            Bs. {{$user->precio_paseo}}
-                                        @endif
-                                    </span>
-                                </td>
-                                <td class="text-right">
-                                    <div class="dropdown">
-                                        <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                            <a class="dropdown-item" href="{{ route('profileCuidador', ['user_id' => $user->id]) }}">Ver</a>
-                                            <a class="dropdown-item" href="{{ route('createServicio', ['user_id' => $user->id]) }}">Solicitar Servicio</a>
-                                            <a class="dropdown-item" href="#">Something else here</a>
+                                    </th>
+                                    <td>
+                                        {{$servicio->tipo_servicio}}
+                                    </td>
+                                    <td>
+                                        {{$servicio->fecha_inicio}} - {{$servicio->fecha_fin}}
+                                    </td>
+                                    <td>
+                                        {{$servicio->precio_total}} Bs.
+                                    </td>
+                                    <td>
+                                        {{$servicio->estado}}
+                                    </td>
+                                    <td class="text-right">
+                                        <div class="dropdown">
+                                            <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="fas fa-ellipsis-v"></i>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                                <a class="dropdown-item" href="{{ route('profileServicio', ['servicio_id' => $servicio->id]) }}">Ver</a>
+                                                <a class="dropdown-item" href="#">Something else here</a>
+                                                <a class="dropdown-item" href="#">Something else here</a>
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
-                            </tr>
+                                    </td>
+                                </tr>
                             @endforeach
                             </tbody>
                         </table>
                         <div class="card-footer py-4">
                             <nav aria-label="...">
                                 <ul class="pagination justify-content-end mb-0">
-                                    {{$users->links()}}
+                                    {{$servicios->links()}}
                                 </ul>
                             </nav>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>

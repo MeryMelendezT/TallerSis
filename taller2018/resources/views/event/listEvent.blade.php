@@ -146,7 +146,7 @@
             <!-- Navigation -->
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link active" href="../cuidador">
+                    <a class="nav-link" href="../cuidador">
                         <i class="ni ni-pin-3 text-purple"></i> Cuidador
                     </a>
                 </li>
@@ -176,11 +176,11 @@
                 </li>
                 <li class="nav-item">
                     @if(\Auth::user()->tipo_usuario == 'Propietario')
-                        <a class="nav-link" href="/home" class="dropdown-item">
+                        <a class="nav-link active" href="/home" class="dropdown-item">
                             <i class="fas fa-id-card text-indigo"></i> Mi Cuenta
                         </a>
                     @elseif(\Auth::user()->tipo_usuario == 'Cuidador')
-                        <a class="nav-link" href="/homeCuidador" class="dropdown-item">
+                        <a class="nav-link active" href="/homeCuidador" class="dropdown-item">
                             <i class="fas fa-id-card text-indigo"></i> Mi Cuenta
                         </a>
                     @endif
@@ -297,7 +297,7 @@
         <div class="container-fluid d-flex align-items-center">
             <div class="row">
                 <div class="col-lg-7 col-md-10">
-                    <h1 class="display-2 text-white">Cuidadores</h1>
+                    <h1 class="display-2 text-white">Disponibilidad</h1>
                     <p class="text-white mt-0 mb-5"></p>
                 </div>
             </div>
@@ -309,69 +309,44 @@
             <div class="col">
                 <div class="card shadow">
                     <div class="card-header border-0">
-                        <h3 class="mb-0">Cuidadores</h3>
+                        <h3 class="mb-0">Dias Ocupados</h3>
                     </div>
                     <div class="table-responsive">
                         <table class="table align-items-center table-flush">
                             <thead class="thead-light">
                             <tr>
-                                <th scope="col">Nombre Completo</th>
-                                <th scope="col">Descripcion</th>
-                                <th scope="col">Alojamiento</th>
-                                <th scope="col">Paseo</th>
+                                <th scope="col">Estado</th>
+                                <th scope="col">Dia</th>
                                 <th scope="col"></th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($users as $user)
-                            <tr>
-                                <th scope="row">
-                                    <div class="media align-items-center">
-                                        <a href="#" class="avatar rounded-circle mr-3">
-                                            <img src="{{ url('/imagePerfil/'.$user->image) }}" class="rounded-circle">
-                                        </a>
-                                        <div class="media-body">
-                                            <span class="mb-0 text-sm">{{$user->name}} {{$user->apellido}}</span>
+                            @foreach($events as $event)
+                                <tr>
+                                    <td>
+                                        {{$event->event_name}}
+                                    </td>
+                                    <td>
+                                        {{$event->start_date}}
+                                    </td>
+                                    <td class="text-right">
+                                        <div class="dropdown">
+                                            <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="fas fa-ellipsis-v"></i>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                                <a class="dropdown-item" href="{{ url('/editEvent/'.$event->id) }}">Editar</a>
+                                                <a class="dropdown-item" href="{{ url('/eliminarEvent/'.$event->id) }}">Eliminar</a>
+                                            </div>
                                         </div>
-                                    </div>
-                                </th>
-                                <td>
-                                    {{$user->descripcion}}
-                                </td>
-                                <td>
-                                    <span class="badge badge-dot mr-4">
-                                        @if($user->alojamiento == 'Si')
-                                            Bs. {{$user->precio_alojamiento}}
-                                        @endif
-                                    </span>
-                                </td>
-                                <td>
-                                    <span class="badge badge-dot mr-4">
-                                        @if($user->paseo == 'Si')
-                                            Bs. {{$user->precio_paseo}}
-                                        @endif
-                                    </span>
-                                </td>
-                                <td class="text-right">
-                                    <div class="dropdown">
-                                        <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                            <a class="dropdown-item" href="{{ route('profileCuidador', ['user_id' => $user->id]) }}">Ver</a>
-                                            <a class="dropdown-item" href="{{ route('createServicio', ['user_id' => $user->id]) }}">Solicitar Servicio</a>
-                                            <a class="dropdown-item" href="#">Something else here</a>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
+                                    </td>
+                                </tr>
                             @endforeach
                             </tbody>
                         </table>
                         <div class="card-footer py-4">
                             <nav aria-label="...">
                                 <ul class="pagination justify-content-end mb-0">
-                                    {{$users->links()}}
                                 </ul>
                             </nav>
                         </div>

@@ -134,6 +134,30 @@ Route::post('/events', array(
     'uses' => 'EventController@addEvent'
 ));
 
+Route::get('/listEvent/', array(
+    'as' => 'listEvent',
+    'middleware' => 'auth',
+    'uses' => 'EventController@listEvent'
+));
+
+Route::get('/editEvent/{event_id}', array(
+    'as' => 'editEvent',
+    'middleware' => 'auth',
+    'uses' => 'EventController@editEvent'
+));
+
+Route::post('/updateEvent/{event_id}', array(
+    'as' => 'updateEvent',
+    'middleware' => 'auth',
+    'uses' => 'EventController@updateEvent'
+));
+
+Route::get('/eliminarEvent/{event_id}', array(
+    'as' => 'eliminarEvent',
+    'middleware' => 'auth',
+    'uses' => 'EventController@deleteEvent'
+));
+
 Route::get('/crearServicio/{user_id}',array(
     'as' => 'createServicio',
     'middleware' => 'auth',
@@ -146,3 +170,32 @@ Route::post('/registerServicio', array(
     'uses' => 'ServicioController@saveServicio'
 ));
 
+Route::get('/servicio',array(
+    'as' => 'servicio',
+    'middleware' => 'auth',
+    'uses' => 'ServicioController@listServicio'
+));
+
+Route::get('/profileServicio/{servicio_id}', array(
+    'as' => 'profileServicio',
+    'middleware' => 'auth',
+    'uses' => 'ServicioController@getProfileServicio'
+));
+
+Route::get('/servicioCuidador',array(
+    'as' => 'servicioCuidador',
+    'middleware' => 'auth',
+    'uses' => 'ServicioController@listServicioCuidador'
+));
+
+Route::get('/aceptarServicio/{servicio_id}',array(
+    'as' => 'aceptarServicio',
+    'middleware' => 'auth',
+    'uses' => 'ServicioController@getAceptar'
+));
+
+Route::get('/rechazarServicio/{servicio_id}',array(
+    'as' => 'rechazarServicio',
+    'middleware' => 'auth',
+    'uses' => 'ServicioController@getRechazar'
+));

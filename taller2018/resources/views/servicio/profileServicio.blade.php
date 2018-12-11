@@ -16,8 +16,6 @@
     <link href="../assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
     <!-- Argon CSS -->
     <link type="text/css" href="../assets/css/argon.css?v=1.0.0" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.2.7/fullcalendar.min.css"/>
-
 </head>
 
 <body>
@@ -165,12 +163,12 @@
                 </li>
                 <li class="nav-item">
                     @if(\Auth::user()->tipo_usuario == 'Propietario')
-                        <a href="/servicio" class="nav-link">
+                        <a href="/servicio" class="nav-link active">
                             <i class="fas fa-list-alt text-teal"></i>
                             <span>Servicios</span>
                         </a>
                     @elseif(\Auth::user()->tipo_usuario == 'Cuidador')
-                        <a href="/servicioCuidador" class="nav-link">
+                        <a href="/servicioCuidador" class="nav-link active">
                             <i class="fas fa-list-alt text-teal"></i>
                             <span>Servicios</span>
                         </a>
@@ -178,11 +176,11 @@
                 </li>
                 <li class="nav-item">
                     @if(\Auth::user()->tipo_usuario == 'Propietario')
-                        <a class="nav-link active" href="/home" class="dropdown-item">
+                        <a class="nav-link" href="/home" class="dropdown-item">
                             <i class="fas fa-id-card text-indigo"></i> Mi Cuenta
                         </a>
                     @elseif(\Auth::user()->tipo_usuario == 'Cuidador')
-                        <a class="nav-link active" href="/homeCuidador" class="dropdown-item">
+                        <a class="nav-link" href="/homeCuidador" class="dropdown-item">
                             <i class="fas fa-id-card text-indigo"></i> Mi Cuenta
                         </a>
                     @endif
@@ -253,17 +251,10 @@
                                 <span>Mi perfil</span>
                             </a>
                         @endif
-                        @if(\Auth::user()->tipo_usuario == 'Propietario')
-                            <a href="/servicio" class="dropdown-item">
-                                <i class="ni ni-calendar-grid-58"></i>
-                                <span>Servicios</span>
-                            </a>
-                        @elseif(\Auth::user()->tipo_usuario == 'Cuidador')
-                            <a href="/servicioCuidador" class="dropdown-item">
-                                <i class="ni ni-calendar-grid-58"></i>
-                                <span>Servicios</span>
-                            </a>
-                        @endif
+                        <a href="#" class="dropdown-item">
+                            <i class="ni ni-calendar-grid-58"></i>
+                            <span>Servicios</span>
+                        </a>
                         @if(\Auth::user()->tipo_usuario == 'Propietario')
                             <a href="/home" class="dropdown-item">
                                 <i class="fas fa-id-card"></i>
@@ -299,7 +290,7 @@
         <div class="container-fluid d-flex align-items-center">
             <div class="row">
                 <div class="col-lg-7 col-md-10">
-                    <h1 class="display-2 text-white">Propietarios</h1>
+                    <h1 class="display-2 text-white">Servicio Para {{ $canino->nombre }} </h1>
                     <p class="text-white mt-0 mb-5"></p>
                 </div>
             </div>
@@ -321,7 +312,13 @@
                             </div>
                             <div class="col-lg-4 order-lg-3 text-lg-right align-self-lg-center">
                                 <div class="card-profile-actions py-4 mt-lg-0">
-                                    <a href="{{url('profilePropietario/'.$canino->user_id)}}" class="btn btn-sm btn-info mr-4">Propietario</a>
+                                    @if(\Auth::user()->id == $user->id)
+                                        <a href="{{ route('aceptarServicio', ['servicio_id' => $servicio->id]) }}" class="btn btn-sm btn-info mr-4">Aceptar Servicio</a>
+                                        <a href="{{ route('rechazarServicio', ['servicio_id' => $servicio->id]) }}" class="btn btn-sm btn-default float-right">Rechzar Servicio</a>
+                                        <br/>
+                                    @elseif(\Auth::user()->id != $user->id)
+                                        <br/><br/>
+                                    @endif
                                 </div>
                             </div>
                             <div class="col-lg-4 order-lg-1">
@@ -331,47 +328,141 @@
                             </div>
                         </div>
                         <div class="text-center mt-5">
-                            <h1>{{$canino->nombre}}
-                            </h1>
+                            <h3>{{$canino->nombre}}
+                                <span class="font-weight-light">, {{ Carbon::parse($canino->nacimiento)->age }} años y {{ Carbon::parse($canino->nacimiento)->month }} meses</span>
+                            </h3>
                             <div><i class="ni education_hat mr-2"></i>{{$canino->raza}} </div>
+                            <div class="h4 font-weight-300"><i class="ni location_pin mr-2"></i>{{ $servicio->tipo_servicio }}</div>
                         </div>
                         <div class="mt-5 py-5 border-top text-center">
                             <div class="row justify-content-center">
-                                <div class="col-lg-12">
+                                <div class="col-lg-6">
                                     <div class="row justify-content-center">
-                                        <div class="col-lg-3">
+                                        <div class="col-lg-6">
                                             <div class="col-xl-12 col-lg-12">
                                                 <div class="card card-stats mb-4 mb-xl-0">
                                                     <div class="card-body">
                                                         <div class="row">
                                                             <div class="col">
-                                                                <h5 class="card-title text-uppercase text-muted mb-0">{{__('Genero')}}</h5>
-                                                                    <span class="h2 font-weight-bold mb-0">{{$canino->genero}}</span>
+                                                                <h5 class="card-title text-uppercase text-muted mb-0">{{__('Propietario')}}</h5>
+                                                                <span class="h2 font-weight-bold mb-0">{{ $servicio->user->name}} </span>
                                                             </div>
                                                             <div class="col-auto">
-                                                                @if($canino->genero == 'Macho')
-                                                                    <div class="icon icon-shape bg-default text-white rounded-circle shadow">
-                                                                        <i class="fas fa-mars"></i>
-                                                                    </div>
-                                                                @elseif($canino->genero == 'Hembra')
-                                                                    <div class="icon icon-shape bg-default text-white rounded-circle shadow">
-                                                                        <i class="fas fa-venus"></i>
-                                                                    </div>
-                                                                @endif
+                                                                <div class="icon icon-shape bg-default text-white rounded-circle shadow">
+                                                                    <i class="fa fa-user-alt"></i>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-3">
+                                        <div class="col-lg-6">
+                                            <div class="col-xl-12 col-lg-12">
+                                                <div class="card card-stats mb-4 mb-xl-0">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <h5 class="card-title text-uppercase text-muted mb-0">{{__('Cuidador')}}</h5>
+                                                                <span class="h2 font-weight-bold mb-0">{{ $user->name }}</span>
+                                                            </div>
+                                                            <div class="col-auto">
+                                                                <div class="icon icon-shape bg-default text-white rounded-circle shadow">
+                                                                    <i class="fas fa-user-alt"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @if($servicio->tipo_servicio == 'Paseo')
+                                            <div class="col-lg-6">
+                                                <div class="col-xl-12 col-lg-12">
+                                                    <div class="card card-stats mb-4 mb-xl-0">
+                                                        <div class="card-body">
+                                                            <div class="row">
+                                                                <div class="col">
+                                                                    <h5 class="card-title text-uppercase text-muted mb-0">{{__('Paseo')}}</h5>
+                                                                    <span class="h2 font-weight-bold mb-0">{{ $user->precio_paseo }} Bs. por hora</span>
+                                                                </div>
+                                                                <div class="col-auto">
+                                                                    <div class="icon icon-shape bg-default text-white rounded-circle shadow">
+                                                                        <i class="fa fa-calendar"></i>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="col-xl-12 col-lg-12">
+                                                    <div class="card card-stats mb-4 mb-xl-0">
+                                                        <div class="card-body">
+                                                            <div class="row">
+                                                                <div class="col">
+                                                                    <h5 class="card-title text-uppercase text-muted mb-0">{{__('Duracion')}}</h5>
+                                                                    <span class="h2 font-weight-bold mb-0">{{ $servicio->duracion }} Horas.</span>
+                                                                </div>
+                                                                <div class="col-auto">
+                                                                    <div class="icon icon-shape bg-default text-white rounded-circle shadow">
+                                                                        <i class="fas fa-user-clock"></i>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @elseif($servicio->tipo_servicio == 'Alojamiento')
+                                            <div class="col-lg-6">
+                                                <div class="col-xl-12 col-lg-12">
+                                                    <div class="card card-stats mb-4 mb-xl-12">
+                                                        <div class="card-body">
+                                                            <div class="row">
+                                                                <div class="col">
+                                                                    <h5 class="card-title text-uppercase text-muted mb-0">{{__('Alojamiento')}}</h5>
+                                                                    <span class="h2 font-weight-bold mb-0">{{ $user->precio_alojamiento }} Bs. por dia</span>
+                                                                </div>
+                                                                <div class="col-auto">
+                                                                    <div class="icon icon-shape bg-default text-white rounded-circle shadow">
+                                                                        <i class="fa fa-building"></i>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="col-xl-12 col-lg-12">
+                                                    <div class="card card-stats mb-4 mb-xl-0">
+                                                        <div class="card-body">
+                                                            <div class="row">
+                                                                <div class="col">
+                                                                    <h5 class="card-title text-uppercase text-muted mb-0">{{__('Duracion')}}</h5>
+                                                                    <span class="h2 font-weight-bold mb-0">{{ $servicio->duracion }} Dias</span>
+                                                                </div>
+                                                                <div class="col-auto">
+                                                                    <div class="icon icon-shape bg-default text-white rounded-circle shadow">
+                                                                        <i class="fas fa-user-clock"></i>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
+                                        <div class="col-lg-6">
                                             <div class="col-xl-12 col-lg-12">
                                                 <div class="card card-stats mb-4 mb-xl-12">
                                                     <div class="card-body">
                                                         <div class="row">
                                                             <div class="col">
-                                                                <h5 class="card-title text-uppercase text-muted mb-0">{{__('Edad')}}</h5>
-                                                                <span class="h2 font-weight-bold mb-0"> {{Carbon::parse($canino->nacimiento)->age }} años, {{Carbon::parse($canino->nacimiento)->month }} meses</span><p></p>
+                                                                <h5 class="card-title text-uppercase text-muted mb-0">{{__('Fecha Inicial')}}</h5>
+                                                                <span class="h2 font-weight-bold mb-0">{{ $servicio->fecha_inicio }}</span>
                                                             </div>
                                                             <div class="col-auto">
                                                                 <div class="icon icon-shape bg-default text-white rounded-circle shadow">
@@ -383,18 +474,18 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-3">
+                                        <div class="col-lg-6">
                                             <div class="col-xl-12 col-lg-12">
                                                 <div class="card card-stats mb-4 mb-xl-12">
                                                     <div class="card-body">
                                                         <div class="row">
                                                             <div class="col">
-                                                                <h5 class="card-title text-uppercase text-muted mb-0">{{__('Agresividad')}}</h5>
-                                                                <span class="h2 font-weight-bold mb-0"> {{$canino->agresivo}}</span><p></p>
+                                                                <h5 class="card-title text-uppercase text-muted mb-0">{{__('Fecha Final')}}</h5>
+                                                                <span class="h2 font-weight-bold mb-0">{{ $servicio->fecha_fin }}</span>
                                                             </div>
                                                             <div class="col-auto">
                                                                 <div class="icon icon-shape bg-default text-white rounded-circle shadow">
-                                                                    <i class="fas fa-paw"></i>
+                                                                    <i class="fas fa-calendar-alt"></i>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -402,134 +493,56 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-3">
-                                            <div class="col-xl-12 col-lg-12">
-                                                <div class="card card-stats mb-4 mb-xl-12">
-                                                    <div class="card-body">
-                                                        <div class="row">
-                                                            <div class="col">
-                                                                <h5 class="card-title text-uppercase text-muted mb-0">{{__('peso')}}</h5>
-                                                                <span class="h2 font-weight-bold mb-0"> {{$canino->peso}} Kilos</span><p></p>
-                                                            </div>
-                                                            <div class="col-auto">
-                                                                <div class="icon icon-shape bg-default text-white rounded-circle shadow">
-                                                                    <i class="fas fa-weight"></i>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="row justify-content-center">
                                         <div class="col-lg-12">
                                             <div class="col-xl-12 col-lg-12">
-                                                <div class="card card-stats mb-4 mb-xl-0">
+                                                <div class="card card-stats mb-4 mb-xl-12">
                                                     <div class="card-body">
                                                         <div class="row">
                                                             <div class="col">
-                                                                <h5 class="card-title text-uppercase text-muted mb-0">{{__('id')}}</h5>
-                                                                <span class="h2 font-weight-bold mb-0"> {{$canino->user_id}} </span>
-                                                            </div>
-                                                            <div class="col-auto">
-                                                                <div class="icon icon-shape bg-default text-white rounded-circle shadow">
-                                                                    <i class="fas fa-mobile-alt"></i>
-                                                                </div>
+                                                                <h5 class="card-title text-uppercase text-muted mb-0">{{__('Estado')}}</h5>
+                                                                <span class="h2 font-weight-bold mb-0">{{ $servicio->estado }}</span>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-11">
+                                            <div class="table-responsive">
+                                                <table class="table align-items-center table-flush">
+                                                    <thead class="thead-light">
+                                                    <tr>
+                                                        <th scope="row">Precio Cuidador</th>
+                                                        <th scope="row">Precio Impuestos y otros</th>
+                                                        <th scope="row">Total</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <td>
+                                                            {{$servicio->precio*$servicio->duracion}}
+                                                        </td>
+                                                        <td>
+                                                            {{$servicio->precio_empresa * $servicio->duracion}}
+                                                        </td>
+                                                        <td>
+                                                            {{$servicio->precio_total}} Bs.
+                                                        </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="row justify-content-center">
-                                        <div class="row">
-                                            <div class="col">
-                                                <div class="card-header border-0">
-                                                    <h3 class="mb-0">Listado Mascotas</h3>
-                                                </div>
-                                                <div class="table-responsive">
-                                                    <table class="table align-items-center table-flush">
-                                                        <thead class="thead-light">
-                                                        <tr>
-                                                            <th scope="col">Nombre</th>
-                                                            <th scope="col">Raza</th>
-                                                            <th scope="col">Fecha de Nacimiento</th>
-                                                            <th scope="col"></th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        @foreach($caninos as $canino)
-                                                            <tr>
-                                                                <th scope="row">
-                                                                    <div class="media align-items-center">
-                                                                        <a href="{{ url('/profileMascota/'.$canino->id) }}" class="avatar rounded-circle mr-3">
-                                                                            @if(Storage::disk('images')->has($canino->image))
-                                                                                <img alt="Image placeholder" src="{{ url('/image/'.$canino->image) }}">
-                                                                            @endif
-                                                                        </a>
-                                                                        <div class="media-body">
-                                                                            <span class="mb-0 text-sm">{{$canino->nombre}}</span>
-                                                                        </div>
-                                                                    </div>
-                                                                </th>
-                                                                <td>
-                                                                    {{$canino->raza}}
-                                                                </td>
-                                                                <td>
-                                                                    {{$canino->nacimiento}}
-                                                                </td>
-                                                                <td class="text-right">
-                                                                    <div class="dropdown">
-                                                                        <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                            <i class="fas fa-ellipsis-v"></i>
-                                                                        </a>
-                                                                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                                                            <a class="dropdown-item" href="{{ url('/profileMascota/'.$canino->id) }}">Ver</a>
-                                                                            @if(Auth::check() && Auth::user()->id == $canino->user->id)
-                                                                                <a class="dropdown-item" href="{{ url('/editarCanino/'.$canino->id) }}">Editar</a>
-                                                                                <a id="#modal{{$canino->id}}" class="dropdown-item" href="{{ url( '/eliminarCanino/'.$canino->id) }}">Eliminar</a>
-                                                                                <div id="modal{{$canino->id}}" class="modal fade">
-                                                                                    <div class="modal-dialog">
-                                                                                        <div class="modal-content">
-                                                                                            <div class="modal-header">
-                                                                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                                                                                <h4 class="modal-title">¿Estás seguro?</h4>
-                                                                                            </div>
-                                                                                            <div class="modal-body">
-                                                                                                <p>¿Seguro que quieres borrar este video?</p>
-                                                                                                <p class="text-warning"><small>{{$canino->nombre}}</small></p>
-                                                                                            </div>
-                                                                                            <div class="modal-footer">
-                                                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                                                                                                <a href="{{ url('/eliminarCanino/'.$canino->id) }}" type="button" class="btn btn-danger">Eliminar</a>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            @endif
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                        @endforeach
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <div class="card-footer py-4">
-                                                    <nav aria-label="...">
-                                                        <ul class="pagination justify-content-end mb-0">
-                                                            {{$caninos->links()}}
-                                                        </ul>
-                                                    </nav>
-                                                </div>
+                                        <div class="text-center">
+                                            <div class="d-flex justify-content-between">
+                                                <h3 class="mb-0">DIRECCION</h3>
                                             </div>
                                         </div>
+                                        <br/><br/>
+                                        <div id="map" class="map-canvas"></div>
                                     </div>
                                 </div>
                             </div>
@@ -556,6 +569,29 @@
 <script src="../assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Argon JS -->
 <script src="../assets/js/argon.js?v=1.0.0"></script>
+
+<script>
+    function initMap() {
+        var myLatLng = {lat: {{$servicio->punto_encuentro_latitud}}, lng: {{$servicio->punto_encuentro_longitud}}};
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+            center: myLatLng,
+            zoom: 17
+        });
+
+        var marker = new google.maps.Marker({
+            position: myLatLng,
+            map: map,
+            title: 'Lugar de Encuentro: Cuidador {{$user->name}}, Mascota: {{$canino->nombre}}',
+            draggable: false,
+        });
+
+
+    }
+
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCx_BcTSU7V5eh1e3KA0WAC-jOZLzSyppQ&libraries=places&callback=initMap" async defer></script>
 
 </body>
 

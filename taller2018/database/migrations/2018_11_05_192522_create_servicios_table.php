@@ -19,6 +19,7 @@ class CreateServiciosTable extends Migration
             //$table->integer('factura_id');
             $table->integer('user_id');
             $table->integer('user_id_1');
+            $table->integer('canino_id');
             //$table->integer('billetera_id');
             //$table->integer('billetera_id_1');
             $table->string('tipo_servicio',25);

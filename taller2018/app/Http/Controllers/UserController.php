@@ -14,6 +14,7 @@ use App\User;
 use Carbon\Carbon;
 use Calendar;
 use App\Event;
+use App\Servicio;
 
 class UserController extends Controller
 {
@@ -46,9 +47,13 @@ class UserController extends Controller
     public function getProfilePropietario($user_id){
         $user = User::find($user_id);
         $caninos = Canino::orderBy('nacimiento','desc')->paginate(5);
+        $count = Canino::where('user_id',$user->id)->count();
+        $countServicioP = Servicio::where('user_id',$user->id)->count();
+
         return view('user.profilePropietario', array(
-            'user' => $user
-        ), array(
+            'user' => $user,
+            'count' => $count,
+            'countServicioP' => $countServicioP,
             'caninos' => $caninos
         ));
     }

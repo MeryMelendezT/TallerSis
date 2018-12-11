@@ -74,10 +74,17 @@
                             <span>Mi perfil</span>
                         </a>
                     @endif
-                    <a href="#" class="dropdown-item">
-                        <i class="ni ni-calendar-grid-58"></i>
-                        <span>Servicios</span>
-                    </a>
+                    @if(\Auth::user()->tipo_usuario == 'Propietario')
+                        <a href="/servicio" class="dropdown-item">
+                            <i class="ni ni-calendar-grid-58"></i>
+                            <span>Servicios</span>
+                        </a>
+                    @elseif(\Auth::user()->tipo_usuario == 'Cuidador')
+                        <a href="/servicioCuidador" class="dropdown-item">
+                            <i class="ni ni-calendar-grid-58"></i>
+                            <span>Servicios</span>
+                        </a>
+                    @endif
                     @if(\Auth::user()->tipo_usuario == 'Propietario')
                         <a href="/home" class="dropdown-item">
                             <i class="fas fa-id-card"></i>
@@ -158,6 +165,19 @@
                 </li>
                 <li class="nav-item">
                     @if(\Auth::user()->tipo_usuario == 'Propietario')
+                        <a href="/servicio" class="nav-link">
+                            <i class="fas fa-list-alt text-teal"></i>
+                            <span>Servicios</span>
+                        </a>
+                    @elseif(\Auth::user()->tipo_usuario == 'Cuidador')
+                        <a href="/servicioCuidador" class="nav-link">
+                            <i class="fas fa-list-alt text-teal"></i>
+                            <span>Servicios</span>
+                        </a>
+                    @endif
+                </li>
+                <li class="nav-item">
+                    @if(\Auth::user()->tipo_usuario == 'Propietario')
                         <a class="nav-link" href="/home" class="dropdown-item">
                             <i class="fas fa-id-card text-indigo"></i> Mi Cuenta
                         </a>
@@ -233,10 +253,17 @@
                                 <span>Mi perfil</span>
                             </a>
                         @endif
-                        <a href="#" class="dropdown-item">
-                            <i class="ni ni-calendar-grid-58"></i>
-                            <span>Servicios</span>
-                        </a>
+                        @if(\Auth::user()->tipo_usuario == 'Propietario')
+                            <a href="/servicio" class="dropdown-item">
+                                <i class="ni ni-calendar-grid-58"></i>
+                                <span>Servicios</span>
+                            </a>
+                        @elseif(\Auth::user()->tipo_usuario == 'Cuidador')
+                            <a href="/servicioCuidador" class="dropdown-item">
+                                <i class="ni ni-calendar-grid-58"></i>
+                                <span>Servicios</span>
+                            </a>
+                        @endif
                         @if(\Auth::user()->tipo_usuario == 'Propietario')
                             <a href="/home" class="dropdown-item">
                                 <i class="fas fa-id-card"></i>
@@ -305,7 +332,14 @@
                             </div>
                             <div class="col-lg-4 order-lg-1">
                                 <div class="card-profile-stats d-flex justify-content-center">
-
+                                    <div>
+                                        <span class="heading">{{$count}}</span>
+                                        <span class="description">Mascotas</span>
+                                    </div>
+                                    <div>
+                                        <span class="heading">{{$countServicioP}}</span>
+                                        <span class="description">Servicio Solicitados</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>

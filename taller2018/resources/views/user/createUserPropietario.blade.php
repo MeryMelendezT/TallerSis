@@ -185,12 +185,22 @@
                                                     <div class="col-lg-3">
                                                         <div class="form-group">
                                                             <label class="form-control-label" for="departamento">{{ __('Departamento') }}</label>
-                                                            <input type="text" id="departamento" class="form-control{{ $errors->has('departamento') ? ' is-invalid' : '' }}" name="departamento" value="{{ old('departamento') }}" pattern="[a-zA-Z ]+" placeholder="Departamento" required>
-
+                                                            <select id="departamento" class="form-control{{ $errors->has('departamento') ? ' is-invalid' : '' }}" name="departamento" value="{{ old('departamento') }}" required>
+                                                                <option value="La Paz">La Paz</option>
+                                                                <option value="El Alto">El Alto</option>
+                                                                <option value="Oruro">Oruro</option>
+                                                                <option value="Cochabamba">Cochabamba</option>
+                                                                <option value="Santa Cruz">Santa Cruz</option>
+                                                                <option value="Beni">Beni</option>
+                                                                <option value="Pando">Pando</option>
+                                                                <option value="Chuquisaca">Chuquisaca</option>
+                                                                <option value="Tarija">Tarija</option>
+                                                                <option value="Potosi">Potosi</option>
+                                                            </select>
                                                             @if ($errors->has('departamento'))
                                                                 <span class="invalid-feedback" role="alert">
-                                                        <strong>{{ $errors->first('departamento') }}</strong>
-                                                    </span>
+                                                                    <strong>{{ $errors->first('departamento') }}</strong>
+                                                                </span>
                                                             @endif
                                                         </div>
                                                     </div>
@@ -343,17 +353,28 @@
                                                 <hr class="my-4" />
                                                 <h6 class="heading-small text-muted mb-4">Informacion de contacto</h6>
                                                 <div class="row">
-                                                        <div class="col-lg-3">
-                                                            <div class="form-group">
-                                                                <label class="form-control-label" for="departamento">{{ __('Departamento') }}</label>
-                                                                <input type="text" id="departamento" class="form-control{{ $errors->has('departamento') ? ' is-invalid' : '' }}" name="departamento" value="{{ old('departamento') }}" pattern="[a-zA-Z ]+" placeholder="Departamento" required>
-                                                                @if ($errors->has('departamento'))
-                                                                    <span class="invalid-feedback" role="alert">
-                                                                        <strong>{{ $errors->first('departamento') }}</strong>
-                                                                    </span>
-                                                                @endif
-                                                            </div>
+                                                    <div class="col-lg-3">
+                                                        <div class="form-group">
+                                                            <label class="form-control-label" for="departamento">{{ __('Departamento') }}</label>
+                                                            <select id="departamento" class="form-control{{ $errors->has('departamento') ? ' is-invalid' : '' }}" name="departamento" value="{{ old('departamento') }}" required>
+                                                                <option value="La Paz">La Paz</option>
+                                                                <option value="El Alto">El Alto</option>
+                                                                <option value="Oruro">Oruro</option>
+                                                                <option value="Cochabamba">Cochabamba</option>
+                                                                <option value="Santa Cruz">Santa Cruz</option>
+                                                                <option value="Beni">Beni</option>
+                                                                <option value="Pando">Pando</option>
+                                                                <option value="Chuquisaca">Chuquisaca</option>
+                                                                <option value="Tarija">Tarija</option>
+                                                                <option value="Potosi">Potosi</option>
+                                                            </select>
+                                                            @if ($errors->has('departamento'))
+                                                                <span class="invalid-feedback" role="alert">
+                                                                    <strong>{{ $errors->first('departamento') }}</strong>
+                                                                </span>
+                                                            @endif
                                                         </div>
+                                                    </div>
                                                         <div class="col-lg-3">
                                                             <div class="form-group">
                                                                 <label class="form-control-label" for="zona">{{ __('Zona') }}</label>

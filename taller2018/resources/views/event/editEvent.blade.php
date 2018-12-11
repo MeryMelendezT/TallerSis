@@ -16,6 +16,7 @@
     <link href="../assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
     <!-- Argon CSS -->
     <link type="text/css" href="../assets/css/argon.css?v=1.0.0" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.2.7/fullcalendar.min.css"/>
 </head>
 
 <body>
@@ -72,10 +73,17 @@
                             <span>Mi perfil</span>
                         </a>
                     @endif
-                    <a href="#" class="dropdown-item">
-                        <i class="ni ni-calendar-grid-58"></i>
-                        <span>Servicios</span>
-                    </a>
+                    @if(\Auth::user()->tipo_usuario == 'Propietario')
+                        <a href="/servicio" class="dropdown-item">
+                            <i class="ni ni-calendar-grid-58"></i>
+                            <span>Servicios</span>
+                        </a>
+                    @elseif(\Auth::user()->tipo_usuario == 'Cuidador')
+                        <a href="/servicioCuidador" class="dropdown-item">
+                            <i class="ni ni-calendar-grid-58"></i>
+                            <span>Servicios</span>
+                        </a>
+                    @endif
                     @if(\Auth::user()->tipo_usuario == 'Propietario')
                         <a href="/home" class="dropdown-item">
                             <i class="fas fa-id-card"></i>
@@ -156,6 +164,19 @@
                 </li>
                 <li class="nav-item">
                     @if(\Auth::user()->tipo_usuario == 'Propietario')
+                        <a href="/servicio" class="nav-link">
+                            <i class="fas fa-list-alt text-teal"></i>
+                            <span>Servicios</span>
+                        </a>
+                    @elseif(\Auth::user()->tipo_usuario == 'Cuidador')
+                        <a href="/servicioCuidador" class="nav-link">
+                            <i class="fas fa-list-alt text-teal"></i>
+                            <span>Servicios</span>
+                        </a>
+                    @endif
+                </li>
+                <li class="nav-item">
+                    @if(\Auth::user()->tipo_usuario == 'Propietario')
                         <a class="nav-link active" href="/home" class="dropdown-item">
                             <i class="fas fa-id-card text-indigo"></i> Mi Cuenta
                         </a>
@@ -231,10 +252,17 @@
                                 <span>Mi perfil</span>
                             </a>
                         @endif
-                        <a href="#" class="dropdown-item">
-                            <i class="ni ni-calendar-grid-58"></i>
-                            <span>Servicios</span>
-                        </a>
+                        @if(\Auth::user()->tipo_usuario == 'Propietario')
+                            <a href="/servicio" class="dropdown-item">
+                                <i class="ni ni-calendar-grid-58"></i>
+                                <span>Servicios</span>
+                            </a>
+                        @elseif(\Auth::user()->tipo_usuario == 'Cuidador')
+                            <a href="/servicioCuidador" class="dropdown-item">
+                                <i class="ni ni-calendar-grid-58"></i>
+                                <span>Servicios</span>
+                            </a>
+                        @endif
                         @if(\Auth::user()->tipo_usuario == 'Propietario')
                             <a href="/home" class="dropdown-item">
                                 <i class="fas fa-id-card"></i>
@@ -270,8 +298,8 @@
         <div class="container-fluid d-flex align-items-center">
             <div class="row">
                 <div class="col-lg-7 col-md-10">
-                    <h1 class="display-2 text-white">Servicios</h1>
-                    <p class="text-white mt-0 mb-5"></p>
+                    <h1 class="display-2 text-white">Disponibilidad</h1>
+                    <p class="text-white mt-0 mb-5"></p>>
                 </div>
             </div>
         </div>
@@ -279,59 +307,57 @@
     <!-- Page content -->
     <div class="container-fluid mt--7">
         <div class="row">
-            <div class="col">
-                <div class="card card-profile shadow mt--30">
-                    <div class="px-4">
-                        <div class="row justify-content-center">
-                            <div class="col-lg-3 order-lg-2">
-                                <div class="card-profile-image">
-                                    <a href="#">
-                                        <img src="../assets/img/theme/team-4-800x800.jpg" class="rounded-circle">
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 order-lg-3 text-lg-right align-self-lg-center">
-                                <div class="card-profile-actions py-4 mt-lg-0">
-                                    <a href="#" class="btn btn-sm btn-info mr-4">Connect</a>
-                                    <a href="#" class="btn btn-sm btn-default float-right">Message</a>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 order-lg-1">
-                                <div class="card-profile-stats d-flex justify-content-center">
-                                    <div>
-                                        <span class="heading">22</span>
-                                        <span class="description">Friends</span>
-                                    </div>
-                                    <div>
-                                        <span class="heading">10</span>
-                                        <span class="description">Photos</span>
-                                    </div>
-                                    <div>
-                                        <span class="heading">89</span>
-                                        <span class="description">Comments</span>
-                                    </div>
-                                </div>
+            <div class="col-xl-6 order-xl-1  mb-xl-0">
+                <div class="card bg-secondary shadow">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-3 order-lg-2">
+                            <div class="card-profile-image">
+                                <a href="#">
+                                </a>
                             </div>
                         </div>
-                        <div class="text-center mt-5">
-                            <h3>Nombre cuidador
-                                <span class="font-weight-light">, edad</span>
-                            </h3>
-                            <div class="h6 font-weight-300"><i class="ni location_pin mr-2"></i>Departamento, Zona</div>
-                            <div><i class="ni education_hat mr-2"></i>Descripcion del servicio</div>
+                    </div>
+                    <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
+                        <div class="d-flex justify-content-between">
+                            <h3 class="mb-0">Dias Ocupados</h3>
                         </div>
-                        <div class="mt-5 py-5 border-top text-center">
-                            <div class="row justify-content-center">
-                                <div class="col-lg-6">
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <input type="datetime-local" id="nacimiento" class="form-control" name="nacimiento" placeholder="Seleccionar fecha de nacimiento" required>
-                                            <span class="input-group-addon">
-                                                <span class="glyphicon glyphicon-calendar"></span>
-                                            </span>
-                                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form method="POST" action="{{ url('/updateEvent/'.$event->id) }}" enctype="multipart/form-data">
+                            @csrf
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="nacimiento">Ocupado el dia {{Carbon::parse($event->start_date)->day}}-{{Carbon::parse($event->start_date)->month}}-{{Carbon::parse($event->start_date)->year}}</label>
+                                        <input type="date" id="start_date" class="form-control" name="start_date" placeholder="Seleccionar fecha ocupada" value="{{$event->start_date}}">
                                     </div>
                                 </div>
+                            </div>
+                            <div class="form-group row mb-0">
+                                <div class="col-md-12 offset-md-5">
+                                    <button type="submit" class="btn btn-primary">
+                                        {{ __('Editar') }}
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6 order-xl-2 mb-5 mb-xl-0">
+                <div class="card card-profile shadow">
+                    <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
+                        <div class="d-flex justify-content-between">
+                            <h3 class="mb-0">SERVICIOS</h3>
+                        </div>
+                    </div>
+                    <div class="card-body pt-0 pt-md-4">
+                        <div class="card-body">
+                            <div class="row">
+                                <form>
+                                    @csrf
+                                    {!! $calendar_details->calendar() !!}
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -354,11 +380,11 @@
 <!-- Core -->
 <script src="../assets/vendor/jquery/dist/jquery.min.js"></script>
 <script src="../assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<!-- Argon JS -->
-<script src="../assets/js/argon.js?v=1.0.0"></script>
+<script src="./assets2/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+
 <script type="text/javascript">
 
-    $('.date').datetimepicker({
+    $('.date').datepicker({
         format: 'yyyy-mm-dd',
         language: 'es',
         autoclose: true
@@ -366,8 +392,12 @@
     });
 
 </script>
+<!--<script src="https://code.jquery.com/jquery.js"></script>-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.2.7/fullcalendar.min.js"></script>
+{!! $calendar_details->script() !!}
+<!-- Argon JS -->
+<script src="../assets/js/argon.js?v=1.0.0"></script>
 </body>
 
 </html>
-
-
