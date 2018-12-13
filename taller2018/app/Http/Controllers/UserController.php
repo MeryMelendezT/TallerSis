@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Comentario;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 
@@ -29,6 +30,7 @@ class UserController extends Controller
         $user = User::find($user_id);
         $events = Event::get()->where('user_id',$user_id);
         $event_list = [];
+        $servicio = Servicio::find($user_id);
         foreach($events as $key => $event){
             $event_list[] = Calendar::event(
                 $event->event_name,
@@ -40,7 +42,8 @@ class UserController extends Controller
         $calendar_details = Calendar::addEvents($event_list);
 
         return view('user.profileCuidador', compact('calendar_details') , array(
-            'user' => $user
+            'user' => $user,
+            'servicio' => $servicio
         ));
     }
 

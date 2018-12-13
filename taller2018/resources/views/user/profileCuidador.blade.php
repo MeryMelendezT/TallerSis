@@ -500,7 +500,7 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-12">
-                                            aca debe ir comentarios y puntuacion
+
                                         </div>
                                     </div>
                                 </div>

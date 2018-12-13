@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Servicio extends Model
 {
@@ -11,6 +12,10 @@ class Servicio extends Model
     use SoftDeletes;
     protected $dates = ['deletedat'];
 
+    //one to many
+    public function comentario(){
+        return $this->hasMany('App\Comentario');
+    }
 
     //Muchos servicios 1 usuario
 

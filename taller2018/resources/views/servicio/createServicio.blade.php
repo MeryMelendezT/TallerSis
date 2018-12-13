@@ -170,12 +170,12 @@
                 </li>
                 <li class="nav-item">
                     @if(\Auth::user()->tipo_usuario == 'Propietario')
-                        <a href="/servicio" class="nav-link active">
+                        <a href="/servicio" class="nav-link">
                             <i class="fas fa-list-alt text-teal"></i>
                             <span>Servicios</span>
                         </a>
                     @elseif(\Auth::user()->tipo_usuario == 'Cuidador')
-                        <a href="/servicioCuidador" class="nav-link active">
+                        <a href="/servicioCuidador" class="nav-link">
                             <i class="fas fa-list-alt text-teal"></i>
                             <span>Servicios</span>
                         </a>
@@ -183,11 +183,11 @@
                 </li>
                 <li class="nav-item">
                     @if(\Auth::user()->tipo_usuario == 'Propietario')
-                        <a class="nav-link" href="/home" class="dropdown-item">
+                        <a class="nav-link active" href="/home" class="dropdown-item">
                             <i class="fas fa-id-card text-indigo"></i> Mi Cuenta
                         </a>
                     @elseif(\Auth::user()->tipo_usuario == 'Cuidador')
-                        <a class="nav-link" href="/homeCuidador" class="dropdown-item">
+                        <a class="nav-link active" href="/homeCuidador" class="dropdown-item">
                             <i class="fas fa-id-card text-indigo"></i> Mi Cuenta
                         </a>
                     @endif
@@ -258,10 +258,17 @@
                                 <span>Mi perfil</span>
                             </a>
                         @endif
-                        <a href="#" class="dropdown-item">
-                            <i class="ni ni-calendar-grid-58"></i>
-                            <span>Servicios</span>
-                        </a>
+                        @if(\Auth::user()->tipo_usuario == 'Propietario')
+                            <a href="/servicio" class="dropdown-item">
+                                <i class="ni ni-calendar-grid-58"></i>
+                                <span>Servicios</span>
+                            </a>
+                        @elseif(\Auth::user()->tipo_usuario == 'Cuidador')
+                            <a href="/servicioCuidador" class="dropdown-item">
+                                <i class="ni ni-calendar-grid-58"></i>
+                                <span>Servicios</span>
+                            </a>
+                        @endif
                         @if(\Auth::user()->tipo_usuario == 'Propietario')
                             <a href="/home" class="dropdown-item">
                                 <i class="fas fa-id-card"></i>
@@ -619,7 +626,7 @@
 
 <script>
     function initMap() {
-        var myLatLng = {lat: $servicio->punto_encuentro_latitud, lng: $servicio->punto_encuentro_longitud};
+        var myLatLng = {lat: -16.522598227254278, lng: -68.11194864364865};
 
         var map = new google.maps.Map(document.getElementById('map'), {
             center: myLatLng,

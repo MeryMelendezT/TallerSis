@@ -545,6 +545,27 @@
                                         <div id="map" class="map-canvas"></div>
                                     </div>
                                 </div>
+                                <div class="col-lg-12">
+                                    <hr class="my-4" />
+                                    @if($servicio->estado == 'Aceptado')
+                                    <form method="POST" action="{{ url('/comentario') }}">
+                                        @csrf
+                                        <div class="card bg-gradient-secondary shadow">
+                                            <div class="card-body p-lg-5">
+                                                <h4 class="mb-1">Comentarios</h4>
+                                                <p class="mt-0"></p>
+                                                <input type="hidden" name="servicio_id" value="{{$servicio->id}}" required/>
+                                                <div class="form-group mb-4">
+                                                    <textarea class="form-control form-control-alternative" id="comentario" name="comentario" rows="4" cols="80" placeholder="Escriba su comentario"></textarea>
+                                                </div>
+                                                <div>
+                                                    <button type="submit" class="btn btn-default btn-round btn-block btn-lg">Comentar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                        @endif
+                                </div>
                             </div>
                         </div>
                     </div>

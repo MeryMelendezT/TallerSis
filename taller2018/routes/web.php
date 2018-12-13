@@ -19,8 +19,6 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/home1', 'HomeController@index1')->name('home1');
-
 Route::get('/homeCuidador', 'HomeController@indexCuidador')->name('homeCuidador');
 
 Route::get('/cuidador', 'UserController@listCuidador')->name('cuidador');
@@ -198,4 +196,10 @@ Route::get('/rechazarServicio/{servicio_id}',array(
     'as' => 'rechazarServicio',
     'middleware' => 'auth',
     'uses' => 'ServicioController@getRechazar'
+));
+
+Route::post('/comentario', array(
+    'as' => 'comentario',
+    'middleware' => 'auth',
+    'uses' => 'ComentarioController@updateComentario'
 ));
