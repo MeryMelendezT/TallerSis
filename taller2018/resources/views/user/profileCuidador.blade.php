@@ -500,7 +500,38 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-12">
-
+                                            <div class="table-responsive">
+                                                <table class="table align-items-center table-flush">
+                                                    <thead class="thead-light">
+                                                    <tr>
+                                                        <th scope="col">Nombre</th>
+                                                        <th scope="col">Comentario</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    @foreach($comentarios as $comentario)
+                                                        <tr>
+                                                            <th scope="row">
+                                                                <div class="media align-items-center">
+                                                                    <div class="media-body">
+                                                                        <span class="mb-0 text-sm">{{$comentario->usuario_id}}, {{ \FormatTime::LongTimeFilter($comentario->created_at)}}</span>
+                                                                    </div>
+                                                                </div>
+                                                            </th>
+                                                            <td>
+                                                                {{$comentario->comentario}}
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                    </tbody>
+                                                </table>
+                                                <div class="card-footer py-4">
+                                                    <nav aria-label="...">
+                                                        <ul class="pagination justify-content-end mb-0">
+                                                        </ul>
+                                                    </nav>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

@@ -17,6 +17,7 @@ class ComentarioController extends Controller
 
 
         $comentario->usuario_id = $user->id;
+        $comentario->usuario_idC = $request->input('usuario_idC');
         $comentario->servicio_id = $request->input('servicio_id');
         $comentario->comentario = $request->input('comentario');
         $comentario->tx_usuario_id = \Auth::user()->id;

@@ -555,6 +555,7 @@
                                                 <h4 class="mb-1">Comentarios</h4>
                                                 <p class="mt-0"></p>
                                                 <input type="hidden" name="servicio_id" value="{{$servicio->id}}" required/>
+                                                <input type="hidden" name="usuario_idC" value="{{$user->id}}" required/>
                                                 <div class="form-group mb-4">
                                                     <textarea class="form-control form-control-alternative" id="comentario" name="comentario" rows="4" cols="80" placeholder="Escriba su comentario"></textarea>
                                                 </div>
@@ -564,7 +565,7 @@
                                             </div>
                                         </div>
                                     </form>
-                                        @endif
+                                    @endif
                                 </div>
                             </div>
                         </div>

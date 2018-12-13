@@ -31,6 +31,8 @@ class UserController extends Controller
         $events = Event::get()->where('user_id',$user_id);
         $event_list = [];
         $servicio = Servicio::find($user_id);
+        $comentarios = Comentario::get()->where('usuario_id','!=', $user_id);
+
         foreach($events as $key => $event){
             $event_list[] = Calendar::event(
                 $event->event_name,
@@ -43,7 +45,8 @@ class UserController extends Controller
 
         return view('user.profileCuidador', compact('calendar_details') , array(
             'user' => $user,
-            'servicio' => $servicio
+            'servicio' => $servicio,
+            'comentarios' => $comentarios
         ));
     }
 
@@ -52,12 +55,16 @@ class UserController extends Controller
         $caninos = Canino::orderBy('nacimiento','desc')->paginate(5);
         $count = Canino::where('user_id',$user->id)->count();
         $countServicioP = Servicio::where('user_id',$user->id)->count();
+        $comentarios = Comentario::get()->where('usuario_id', '!=', $user_id);
+
 
         return view('user.profilePropietario', array(
             'user' => $user,
             'count' => $count,
             'countServicioP' => $countServicioP,
-            'caninos' => $caninos
+            'caninos' => $caninos,
+            'comentarios' => $comentarios
+
         ));
     }
 
